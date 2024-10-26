@@ -29,4 +29,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
+    # - images/
+    - images/add_a_photo.png
+    - images/dao.jpg
+    - images/facebook_icon.png
+    - images/gmail_icon.png
