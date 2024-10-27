@@ -1,6 +1,3 @@
-
-import 'package:car_servicing/ui/screens/BasicService.dart';
-import 'package:car_servicing/ui/screens/Checkout.dart';
 import 'package:flutter/material.dart';
 
 
@@ -16,7 +13,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: CheckoutScreen(),
     );
   }
 }
