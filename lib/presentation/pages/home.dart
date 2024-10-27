@@ -1,5 +1,4 @@
 import 'package:car_servicing/presentation/pages/select_service.dart';
-import 'package:car_servicing/responsive/ResponsiveWidget.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -8,15 +7,17 @@ class Home extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
 		return Scaffold(
-			body: Padding(
-				padding: const EdgeInsets.all(16.0),
-				child: Column(
-					children: [
-						_buildUserGreeting(),
-						_buildSearchBar(),
-						_buildServiceBanner(),
-						_buildServiceSelectionGrid(context),
-					],
+			body: SingleChildScrollView( // Wrap Column in SingleChildScrollView
+				child: Padding(
+					padding: const EdgeInsets.all(16.0),
+					child: Column(
+						children: [
+							_buildUserGreeting(),
+							_buildSearchBar(),
+							_buildServiceBanner(),
+							_buildServiceSelectionGrid(context),
+						],
+					),
 				),
 			),
 			bottomNavigationBar: _buildBottomNavigationBar(),
@@ -24,14 +25,14 @@ class Home extends StatelessWidget {
 	}
 
 	Widget _buildUserGreeting() {
-		return const Row(
+		return Row(
 			children: [
-				CircleAvatar(
-					backgroundImage: AssetImage('/images/car.jpg'), // Replace with actual user image
+				const CircleAvatar(
+					backgroundImage: AssetImage('assets/images/car.jpg'), // Replace with actual user image
 					radius: 25,
 				),
-				SizedBox(width: 10),
-				Text('Hello Thuan', style: TextStyle(fontSize: 20)),
+				const SizedBox(width: 10),
+				const Text('Hello Thuan', style: TextStyle(fontSize: 20)),
 			],
 		);
 	}
@@ -43,7 +44,7 @@ class Home extends StatelessWidget {
 				decoration: InputDecoration(
 					hintText: 'Search for a car service',
 					border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-					prefixIcon: Icon(Icons.search),
+					prefixIcon: const Icon(Icons.search),
 				),
 			),
 		);
@@ -52,18 +53,21 @@ class Home extends StatelessWidget {
 	Widget _buildServiceBanner() {
 		return Container(
 			height: 150,
-			child: Image.asset('/images/banner.png', fit: BoxFit.cover), // Replace with actual banner image
+			margin: const EdgeInsets.symmetric(vertical: 10),
+			child: Image.asset('assets/images/banner.png', fit: BoxFit.cover), // Replace with actual banner image
 		);
 	}
 
 	Widget _buildServiceSelectionGrid(BuildContext context) {
-		return Expanded(
+		return Padding(
+			padding: const EdgeInsets.only(top: 16.0),
 			child: GridView.count(
-				crossAxisCount: ResponsiveWidget.isMobile(context) ? 3 : 4,
+				shrinkWrap: true, // Enable GridView to take only necessary space
+				physics: const NeverScrollableScrollPhysics(), // Disable GridView's scroll
 				crossAxisSpacing: 10,
 				mainAxisSpacing: 10,
+				crossAxisCount: 3,
 				children: [
-					// Wrap each service icon with GestureDetector to add navigation
 					_buildServiceIcon(context, 'Car Service', Icons.car_repair),
 					_buildServiceIcon(context, 'Tyres & Wheel Care', Icons.settings),
 					_buildServiceIcon(context, 'Denting & Painting', Icons.brush),
@@ -73,7 +77,6 @@ class Home extends StatelessWidget {
 					_buildServiceIcon(context, 'Clutch & Gearbox', Icons.build),
 					_buildServiceIcon(context, 'Dry clean', Icons.local_laundry_service),
 					_buildServiceIcon(context, 'Car Wash', Icons.local_car_wash),
-					_buildServiceIcon(context, 'Oil Change', Icons.oil_barrel),
 				],
 			),
 		);
@@ -82,17 +85,16 @@ class Home extends StatelessWidget {
 	Widget _buildServiceIcon(BuildContext context, String label, IconData icon) {
 		return GestureDetector(
 			onTap: () {
-				// Navigate to SelectServicePage when the icon is tapped
 				Navigator.push(
 					context,
-					MaterialPageRoute(builder: (context) => SelectServicePage()),
+					MaterialPageRoute(builder: (context) => const SelectServicePage()),
 				);
 			},
 			child: Column(
 				mainAxisSize: MainAxisSize.min,
 				children: [
 					Icon(icon, size: 36, color: Colors.blue),
-					SizedBox(height: 8),
+					const SizedBox(height: 8),
 					Text(label, textAlign: TextAlign.center),
 				],
 			),
@@ -101,7 +103,7 @@ class Home extends StatelessWidget {
 
 	Widget _buildBottomNavigationBar() {
 		return BottomNavigationBar(
-			items: [
+			items: const [
 				BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
 				BottomNavigationBarItem(icon: Icon(Icons.directions_car), label: 'Vehicles'),
 				BottomNavigationBarItem(icon: Icon(Icons.receipt), label: 'Records'),
