@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  form_field_validator: ^1.0.1
+  image_picker: ^1.0.0
   cupertino_icons: ^1.0.8
   provider: ^6.1.2
   http: ^1.2.2
