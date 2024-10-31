@@ -1,7 +1,6 @@
 import 'package:car_servicing/constants.dart';
-import 'package:car_servicing/ui/screens/UserProfile.dart';
-import 'package:car_servicing/widget/button_widget.dart';
-import 'package:car_servicing/widget/textfield_widget.dart';
+import 'package:car_servicing/presentation/pages/user/UserProfile.dart';
+import 'package:car_servicing/presentation/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 
 class EditUserProfile extends StatefulWidget {
@@ -20,7 +19,7 @@ class _EditUserProfileState extends  State<EditUserProfile>  {
         child: Scaffold(
           backgroundColor: kBackgroundColor,
           appBar: AppBar(
-            backgroundColor: kBackgroundColor,
+            backgroundColor: kAppBarColor,
             leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
@@ -101,7 +100,7 @@ class _EditUserProfileState extends  State<EditUserProfile>  {
         Text(
           label,
           style: const TextStyle(
-            color: kSecondaryColor,
+            color: kTextColor,
             fontSize: 22,
             fontWeight: FontWeight.bold,
           ),

@@ -1,15 +1,32 @@
 
-// import 'package:car_servicing/ui/screens/BasicService.dart';
-import 'package:car_servicing/ui/screens/Checkout.dart';
-import 'package:car_servicing/ui/screens/EditUserProfile.dart';
-import 'package:car_servicing/ui/screens/Login.dart';
-import 'package:car_servicing/ui/screens/Registation.dart';
-import 'package:car_servicing/ui/screens/Settings.dart';
-import 'package:car_servicing/ui/screens/UserProfile.dart';
+import 'package:car_servicing/presentation/pages/user/EditUserProfile.dart';
+import 'package:car_servicing/presentation/pages/auth/Login.dart';
+import 'package:car_servicing/presentation/pages/auth/Registation.dart';
+import 'package:car_servicing/presentation/pages/Settings.dart';
+import 'package:car_servicing/presentation/pages/user/UserProfile.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
-void main() {
+Future<void> main() async {
+  //firebase authentication
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  if(kIsWeb){
+    await Firebase.initializeApp(options: const FirebaseOptions(apiKey: "AIzaSyDD_CGCO1Nip3tg5g6l1kLXnfhpby8PVbs",
+  authDomain: "car-service-f3b5b.firebaseapp.com",
+  databaseURL: "https://car-service-f3b5b-default-rtdb.firebaseio.com",
+  projectId: "car-service-f3b5b",
+  storageBucket: "car-service-f3b5b.firebasestorage.app",
+  messagingSenderId: "173987522263",
+  appId: "1:173987522263:web:1976716ffaa63eb907f292",
+  measurementId: "G-FVGTW17R7N"));
+  }
+  else{
+    await Firebase.initializeApp();
+  }
+  
   runApp(MyApp());
 }
 
@@ -23,10 +40,11 @@ class MyApp extends StatelessWidget {
     //   ),
     //   home: CheckoutScreen(),
     // );
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Login.id,
-      routes: {
+      initialRoute: Registation.id,
+      routes: { 
         UserProfile.id: (context) => const UserProfile(),
         EditUserProfile.id: (context) => const EditUserProfile(),
         Settings.id:(context) => const Settings(),

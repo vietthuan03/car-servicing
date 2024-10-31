@@ -1,8 +1,8 @@
 import 'package:car_servicing/constants.dart';
-import 'package:car_servicing/ui/screens/Registation.dart';
-import 'package:car_servicing/ui/screens/UserAuthentication_viewmodel.dart';
-import 'package:car_servicing/widget/button_widget.dart';
-import 'package:car_servicing/widget/textfield_widget.dart';
+import 'package:car_servicing/presentation/pages/auth/Registation.dart';
+import 'package:car_servicing/viewModel/Auth_viewmodel.dart';
+import 'package:car_servicing/presentation/widgets/button_widget.dart';
+import 'package:car_servicing/presentation/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -15,6 +15,17 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final validation = UserAuthenticationViewmodel();
+
+  final _email=TextEditingController();
+  final _password=TextEditingController();
+
+  //text trong controller chiếM nhiều dung lg trong bộ nhớ -> loại bỏ
+  @override
+  void dispose() {
+    super.dispose();
+    _email.dispose();
+    _password.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,10 +40,12 @@ class _LoginState extends State<Login> {
                   // mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(height: 40),
-                     const Center(child: Text("LOGIN",style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: kSecondaryColor),)),
+                     const Center(child: Text("LOGIN",style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: kTextColor),)),
                      const SizedBox(height: 40),
                      CustomTextField(
                       label: "Email",
+                      hint: "Enter Your Email",
+                      controller: _email,
                       errorText: validation.email.error,
                       onChanged: (value){
                         validation.validateEmail(value);
@@ -43,6 +56,8 @@ class _LoginState extends State<Login> {
                     ),
                      CustomTextField(
                       label: "Password",
+                      hint: "Enter Your Password",
+                      controller: _password,
                       isPass: true,
                       errorText: validation.password.error,
                       onChanged: (value){
@@ -53,14 +68,14 @@ class _LoginState extends State<Login> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TextButton(onPressed: (){}, child: const Text("Forgot Password?",style: TextStyle(color: kSecondaryColor,fontSize: 14,fontWeight: FontWeight.bold),)),
+                    TextButton(onPressed: (){}, child: const Text("Forgot Password?",style: TextStyle(color: kTextColor,fontSize: 14,fontWeight: FontWeight.bold),)),
                   ],
                 ),
                 const SizedBox(height: 16),
                 CustomButton(
                   label: "LOGIN",
-                  onPressed:validation.isValid ? (){
-                    validation.Login();
+                  onPressed:validation.isValidLogin ? (){
+                    validation.login(context);
                   }:null,),
                   const SizedBox(height: 40),
                    Row(
@@ -68,7 +83,7 @@ class _LoginState extends State<Login> {
                     children: [
                       const Text(
                       'Create new account?',
-                      style: TextStyle(fontSize: 16, color: kSecondaryColor),
+                      style: TextStyle(fontSize: 16, color: kTextColor),
                     ),
                     TextButton(onPressed: (){
                       Navigator.pushNamed(context, Registation.id);
@@ -84,21 +99,21 @@ class _LoginState extends State<Login> {
                     children: [
                       SizedBox(
                         width: 56,
-                        child: Divider(color: kSecondaryColor,),
+                        child: Divider(color: kTextColor,),
                       ),
                       SizedBox(
                         width: 4,
                       ),
                       Text(
                       'or login with',
-                      style: TextStyle(fontSize: 14, color: kSecondaryColor),
+                      style: TextStyle(fontSize: 14, color: kTextColor),
                     ),
                     SizedBox(
                         width: 4,
                       ),
                     SizedBox(
                         width: 56,
-                        child: Divider(color: kSecondaryColor,),
+                        child: Divider(color: kTextColor,),
                       ),
                     ],
                                      ),
@@ -115,7 +130,6 @@ class _LoginState extends State<Login> {
     );
      
   }
-  
 }
 
   Widget _buildSocialBtn(Function onTap, AssetImage logo) {

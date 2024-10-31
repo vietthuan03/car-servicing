@@ -1,4 +1,7 @@
 import 'package:car_servicing/constants.dart';
+import 'package:car_servicing/presentation/widgets/button_widget.dart';
+import 'package:car_servicing/services/auth_service.dart';
+import 'package:car_servicing/viewModel/Auth_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class Settings extends StatefulWidget {
@@ -10,13 +13,15 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  final validation = UserAuthenticationViewmodel();
+  final _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return  SafeArea(
         child: Scaffold(
           backgroundColor: kBackgroundColor,
           appBar: AppBar(
-            backgroundColor: kBackgroundColor,
+            backgroundColor: kAppBarColor,
             leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
@@ -44,6 +49,13 @@ class _SettingsState extends State<Settings> {
                      const SizedBox(height: 16,),
                     buildFieldRow(icon: Icons.delete_forever,text: "Delete Account"),
                      const SizedBox(height: 16,),
+                     CustomButton(
+                      label: "Sign Out",
+                      onPressed: () async{
+                        await _auth.signout();
+                        validation.goToHome(context);
+                      },
+                    )
                   ],
                 )
               ),
@@ -66,7 +78,7 @@ class _SettingsState extends State<Settings> {
     decoration: const BoxDecoration(
       border: Border(
         bottom: BorderSide(
-          color: kSecondaryColor,
+          color: kTextColor,
           width: 1
         )
       )
@@ -80,7 +92,7 @@ class _SettingsState extends State<Settings> {
           Icon(icon),
           Padding(padding: const EdgeInsets.only(left: 8),
           child: Text(text,style: const TextStyle(
-                  color: kSecondaryColor,  fontSize: 16)),),
+                  color: kTextColor,  fontSize: 16)),),
           const Spacer(),
           const Icon(Icons.arrow_forward_ios)
         ],

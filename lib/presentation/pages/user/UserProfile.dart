@@ -1,6 +1,7 @@
 import 'package:car_servicing/constants.dart';
-import 'package:car_servicing/ui/screens/EditUserProfile.dart';
-import 'package:car_servicing/widget/button_widget.dart';
+import 'package:car_servicing/presentation/pages/user/EditUserProfile.dart';
+import 'package:car_servicing/presentation/widgets/button_widget.dart';
+import 'package:car_servicing/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatefulWidget {
@@ -11,13 +12,15 @@ class UserProfile extends StatefulWidget {
   _UserProfileState createState() => _UserProfileState();
 }
 class _UserProfileState extends  State<UserProfile>  {
+  final _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
           backgroundColor: kBackgroundColor,
           appBar: AppBar(
-            backgroundColor:kBackgroundColor,
+            backgroundColor:kAppBarColor,
             leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
@@ -40,11 +43,11 @@ class _UserProfileState extends  State<UserProfile>  {
                       backgroundImage: AssetImage('images/dao.jpg'),
                     ),
                     const SizedBox(height: 16),
-                     const Text('DaoTq',style: TextStyle(fontFamily: '',fontSize: 24,color: kSecondaryColor, fontWeight: FontWeight.bold)),
+                     const Text('DaoTq',style: TextStyle(fontFamily: '',fontSize: 24,color: kTextColor, fontWeight: FontWeight.bold)),
                      const SizedBox(
                       height: 24,
                       width: 160,
-                      child: Divider(color: kSecondaryColor,),
+                      child: Divider(color: kTextColor,),
                     ),
                     const SizedBox(height: 16),
                     buildInfoCard(icon: Icons.email,text:"truongquangdao102@gmail.com"),
@@ -55,8 +58,8 @@ class _UserProfileState extends  State<UserProfile>  {
                     const SizedBox(height: 16),
                 CustomButton(label: "EDIT PROFILE",onPressed: (){
                   Navigator.pushNamed(context, EditUserProfile.id);
-                },)
-
+                },),
+                const SizedBox(height: 16,),
                   ],
                 )
               ),
@@ -83,7 +86,7 @@ class _UserProfileState extends  State<UserProfile>  {
             maxLines: 1,
             softWrap: false,
             style: const TextStyle(
-                color: kSecondaryColor, fontFamily: 'Arial', fontSize: 22 ),
+                color: kTextColor, fontFamily: 'Arial', fontSize: 22 ),
           ))));
  }
 
