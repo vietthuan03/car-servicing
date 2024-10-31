@@ -50,6 +50,12 @@ class UserAuthenticationViewmodel {
       }
     } catch (e) {
       email = ValidationModel(value: email.value, error: "Invalid email or password");
+      ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(password.error ?? "Invalid email or password"),
+        backgroundColor: Colors.red,
+      ),
+    );
     }
   }
 

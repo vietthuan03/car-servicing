@@ -1,6 +1,6 @@
 import 'package:car_servicing/constants.dart';
 import 'package:car_servicing/presentation/pages/auth/Registation.dart';
-import 'package:car_servicing/viewModel/Auth_viewmodel.dart';
+import 'package:car_servicing/viewmodels/Auth_viewmodel.dart';
 import 'package:car_servicing/presentation/widgets/button_widget.dart';
 import 'package:car_servicing/presentation/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
