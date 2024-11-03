@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:car_servicing/presentation/pages/user/EditUserProfile.dart';
 import 'package:car_servicing/presentation/pages/auth/Login.dart';
 import 'package:car_servicing/presentation/pages/auth/Registation.dart';
@@ -14,17 +16,24 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   if(kIsWeb){
-    await Firebase.initializeApp(options: const FirebaseOptions(apiKey: "AIzaSyDD_CGCO1Nip3tg5g6l1kLXnfhpby8PVbs",
-  authDomain: "car-service-f3b5b.firebaseapp.com",
-  databaseURL: "https://car-service-f3b5b-default-rtdb.firebaseio.com",
-  projectId: "car-service-f3b5b",
-  storageBucket: "car-service-f3b5b.firebasestorage.app",
-  messagingSenderId: "173987522263",
-  appId: "1:173987522263:web:1976716ffaa63eb907f292",
-  measurementId: "G-FVGTW17R7N"));
+    await Firebase.initializeApp(options: const FirebaseOptions(
+      apiKey: "AIzaSyDD_CGCO1Nip3tg5g6l1kLXnfhpby8PVbs",
+      authDomain: "car-service-f3b5b.firebaseapp.com",
+      databaseURL: "https://car-service-f3b5b-default-rtdb.firebaseio.com",
+      projectId: "car-service-f3b5b",
+      storageBucket: "car-service-f3b5b.firebasestorage.app",
+      messagingSenderId: "173987522263",
+      appId: "1:173987522263:web:1976716ffaa63eb907f292",
+      measurementId: "G-FVGTW17R7N"));
   }
-  else{
-    await Firebase.initializeApp();
+  else if(Platform.isAndroid){
+    // await Firebase.initializeApp();
+    await Firebase.initializeApp(options: const FirebaseOptions(
+      apiKey: "AIzaSyCK1ycvjMVqlkBoOCio0td0l3QGBs8j3-E",
+      projectId: "car-service-f3b5b",
+      messagingSenderId: "173987522263",
+      appId: "1:173987522263:android:68c5afef34ef409f07f292",
+      ));
   }
   
   runApp(MyApp());

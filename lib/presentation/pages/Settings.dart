@@ -52,7 +52,7 @@ class _SettingsState extends State<Settings> {
                      CustomButton(
                       label: "Sign Out",
                       onPressed: () async{
-                        await _auth.signout();
+                        await _auth.signout(context);
                         validation.goToHome(context);
                       },
                     )

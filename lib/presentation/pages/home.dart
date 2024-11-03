@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
             CustomButton(
               label: "Sign Out",
               onPressed: () async{
-                await _auth.signout();
+                await _auth.signout(context);
                 goToLogin(context);
               },
             )

@@ -4,6 +4,7 @@ import 'package:car_servicing/extension/string_ext.dart';
 import 'package:car_servicing/models/auth_validation_model.dart';
 import 'package:car_servicing/presentation/pages/Home.dart';
 import 'package:car_servicing/presentation/pages/auth/Login.dart';
+import 'package:car_servicing/presentation/widgets/snackbarMessage.dart';
 import 'package:car_servicing/services/Auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class UserAuthenticationViewmodel {
     if (value.isValidPassword) {
       password =ValidationModel(value: value,error: null);
     }else{
-      password = ValidationModel(value: value,error: "Password must be at least 8 characters");
+      password = ValidationModel(value: value,error: "Password must be at least 6 characters");
     }
   }
 
@@ -42,41 +43,25 @@ class UserAuthenticationViewmodel {
   }
 
   Future<void> login(BuildContext context) async {
-    try {
-      final user= await _auth.loginUserWithEmailAndPassword(email.value!, password.value!);
+    // try {
+      final user= await _auth.loginUserWithEmailAndPassword(email.value!, password.value!,context);
       if (user!=null) {
-        log("User Logged In");
+        // Show success snackbar
+        snackbarMessage(message: "Login successful!",isError: false, context: context,).show();
+        // Navigate to Home page
         goToHome(context);
       }
-    } catch (e) {
-      email = ValidationModel(value: email.value, error: "Invalid email or password");
-      ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(password.error ?? "Invalid email or password"),
-        backgroundColor: Colors.red,
-      ),
-    );
-    }
   }
 
   Future<void> register(BuildContext context) async {
-    try {
-      // Check if email is already registered
-      final existingUser = await _auth.loginUserWithEmailAndPassword(email.value!, password.value!);
-      if (existingUser != null) {
-        email = ValidationModel(value: email.value, error: "Email is already registered");
-        return;
-      }
-    } catch (e) {
-      // If error is user-not-found, continue to create the user
-    }
-
-    // Register user
-    final user = await _auth.createUserWithEmailAndPassword(email.value!, password.value!);
-    if (user != null) {
-      log("User Created Successfully");
+    final user = await _auth.createUserWithEmailAndPassword(email.value!, password.value!,context);
+    if (user!=null) {
+      // Show success snackbar
+        snackbarMessage(message: "Registration successful!",isError: false, context: context,).show();
+      // Navigate to Home page
       goToHome(context);
-    }
+    }  
+    
   }
   goToHome(BuildContext context) => Navigator.push(
         context,
