@@ -1,40 +1,18 @@
 
-import 'dart:io';
-
+import 'package:car_servicing/firebase_option.dart';
 import 'package:car_servicing/presentation/pages/user/EditUserProfile.dart';
 import 'package:car_servicing/presentation/pages/auth/Login.dart';
 import 'package:car_servicing/presentation/pages/auth/Registation.dart';
 import 'package:car_servicing/presentation/pages/Settings.dart';
 import 'package:car_servicing/presentation/pages/user/UserProfile.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
 Future<void> main() async {
   //firebase authentication
   WidgetsFlutterBinding.ensureInitialized();
-  
-  if(kIsWeb){
-    await Firebase.initializeApp(options: const FirebaseOptions(
-      apiKey: "AIzaSyDD_CGCO1Nip3tg5g6l1kLXnfhpby8PVbs",
-      authDomain: "car-service-f3b5b.firebaseapp.com",
-      databaseURL: "https://car-service-f3b5b-default-rtdb.firebaseio.com",
-      projectId: "car-service-f3b5b",
-      storageBucket: "car-service-f3b5b.firebasestorage.app",
-      messagingSenderId: "173987522263",
-      appId: "1:173987522263:web:1976716ffaa63eb907f292",
-      measurementId: "G-FVGTW17R7N"));
-  }
-  else if(Platform.isAndroid){
-    // await Firebase.initializeApp();
-    await Firebase.initializeApp(options: const FirebaseOptions(
-      apiKey: "AIzaSyCK1ycvjMVqlkBoOCio0td0l3QGBs8j3-E",
-      projectId: "car-service-f3b5b",
-      messagingSenderId: "173987522263",
-      appId: "1:173987522263:android:68c5afef34ef409f07f292",
-      ));
-  }
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   
   runApp(MyApp());
 }
@@ -52,7 +30,7 @@ class MyApp extends StatelessWidget {
     
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Registation.id,
+      initialRoute: Login.id,
       routes: { 
         UserProfile.id: (context) => const UserProfile(),
         EditUserProfile.id: (context) => const EditUserProfile(),
