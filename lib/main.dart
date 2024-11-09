@@ -1,6 +1,5 @@
-import 'package:car_servicing/ui/infor_car/AddCar.dart';
+import 'package:car_servicing/presentation/pages/infor_car/vehicle.dart';
 import 'package:flutter/material.dart';
-
 
 void main() {
   runApp(MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: AddCarScreen(),
+      home: VehicleScreen(),
     );
   }
 }
