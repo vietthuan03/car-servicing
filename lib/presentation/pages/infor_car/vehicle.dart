@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widget/service_card.dart';
-import '../widget/service_card2.dart';
+
+import '../../widget/service_card.dart';
+import '../../widget/service_card2.dart';
 
 class VehicleScreen extends StatelessWidget {
   @override
@@ -43,7 +44,8 @@ class VehicleScreen extends StatelessWidget {
             label: 'Records',
           ),
         ],
-        currentIndex: 1, // Set initial index to 1 for Vehicles screen
+        currentIndex: 1,
+        // Set initial index to 1 for Vehicles screen
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         showSelectedLabels: false,
@@ -70,10 +72,4 @@ class VehicleScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: VehicleScreen(),
-  ));
 }
