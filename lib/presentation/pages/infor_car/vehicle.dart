@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../widget/service_card.dart';
-import '../../widget/service_card2.dart';
+import '../../widgets/service_card.dart';
+import '../../widgets/service_card2.dart';
 
 class VehicleScreen extends StatelessWidget {
   @override
@@ -66,7 +66,7 @@ class VehicleScreen extends StatelessWidget {
               thickness: 1,
               height: 32,
             ),
-            ServiceCard(),
+            // ServiceCard(),
           ],
         ),
       ),

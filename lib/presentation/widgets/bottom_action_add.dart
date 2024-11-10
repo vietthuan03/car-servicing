@@ -28,8 +28,8 @@ class BottomActionAddWidget extends StatelessWidget {
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => CheckoutPage()),
-                    (Route<dynamic> route) => false,
+                MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                (Route<dynamic> route) => false,
               );
             },
             child: Text(

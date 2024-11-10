@@ -23,7 +23,7 @@ class _PaymentScreenState extends State<PaymentPage> {
             onPressed: () => {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => CheckoutPage()),
+                    MaterialPageRoute(builder: (context) => CheckoutScreen()),
                     (Route<dynamic> route) => false,
                   )
                 }),
