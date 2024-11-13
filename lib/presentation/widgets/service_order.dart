@@ -1,3 +1,4 @@
+import 'package:car_servicing/presentation/pages/checkout.dart';
 import 'package:car_servicing/presentation/widgets/service_cart_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -90,6 +91,12 @@ class ServiceOrder extends StatelessWidget {
                 Expanded(
                   child: TextButton(
                     onPressed: () {
+                      // Điều hướng đến trang Checkout
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CheckoutScreen()),
+                      );
                       print('BOOK A SERVICE');
                     },
                     child: Text(
