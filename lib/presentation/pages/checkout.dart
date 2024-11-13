@@ -1,5 +1,4 @@
-import 'package:car_servicing/presentation/widgets/date_picker_custom.dart';
-import 'package:car_servicing/presentation/widgets/time_picker_custom.dart';
+import 'package:car_servicing/presentation/widgets/date_time_custom.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -10,29 +9,17 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  int selectedDateIndex = 0;
-  int selectedTimeSlotIndex = -1;
+  bool isDateTimeSelected = false;
 
-  DateTime? selectedDate;
-  TimeOfDay? selectedTime;
+  void _onDateSelected(DateTime dateTime) {
+    final now = DateTime.now();
+    final bool isValidTime = dateTime.isAfter(now) &&
+      (dateTime.hour > 8 || (dateTime.hour == 8 && dateTime.minute >= 0)) &&
+      (dateTime.hour < 17 || (dateTime.hour == 17 && dateTime.minute == 0)); // Ensure time between 08:00 and 17:00
 
-  void onDateSelected(DateTime date) {
     setState(() {
-      selectedDate = date;
+      isDateTimeSelected = isValidTime;
     });
-  }
-
-  void onTimeSelected(TimeOfDay time) {
-    setState(() {
-      selectedTime = time;
-    });
-  }
-
-  bool get isProceedEnabled {
-    return selectedDate != null &&
-        selectedTime != null &&
-        selectedTime!.hour >= 8 &&
-        selectedTime!.hour <= 17;
   }
 
   @override
@@ -65,30 +52,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Select Date',
+                    'Select Date & Time',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
                   SizedBox(
-                    height: 80,
-                    width: 120,
-                    child: DatePickerCustom(
-                      onDateSelected: onDateSelected,
+                    height: 200,
+                    width: 200,
+                    child: DateTimePickerCustom(
+                      onDateSelected: _onDateSelected,
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Select Pick-up Time Slot',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    height: 80,
-                    width: 120,
-                    child: TimePickerCustom(
-                      onTimeSelected: onTimeSelected,
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -98,18 +73,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: isProceedEnabled
+              onPressed: isDateTimeSelected
                   ? () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text('Proceeding a booking...')),
+                          content: Text('Proceed to the next screen...'),
+                        ),
                       );
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => SelectServiceScreen(),
-                      //   ),
-                      // );
                     }
                   : null,
               style: ElevatedButton.styleFrom(
