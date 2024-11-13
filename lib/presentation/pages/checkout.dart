@@ -3,6 +3,8 @@ import 'package:car_servicing/presentation/widgets/time_picker_custom.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutScreen extends StatefulWidget {
+  const CheckoutScreen({super.key});
+
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();
 }
@@ -27,7 +29,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   bool get isProceedEnabled {
-    return selectedDate != null && selectedTime != null && selectedTime!.hour >= 8 && selectedTime!.hour <= 17;
+    return selectedDate != null &&
+        selectedTime != null &&
+        selectedTime!.hour >= 8 &&
+        selectedTime!.hour <= 17;
   }
 
   @override
@@ -64,14 +69,26 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
-                  SizedBox(height: 80, width: 120, child: DatePickerCustom(onDateSelected: onDateSelected,),),
+                  SizedBox(
+                    height: 80,
+                    width: 120,
+                    child: DatePickerCustom(
+                      onDateSelected: onDateSelected,
+                    ),
+                  ),
                   const SizedBox(height: 16),
                   const Text(
                     'Select Pick-up Time Slot',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
-                  SizedBox(height: 80, width: 120, child: TimePickerCustom(onTimeSelected: onTimeSelected,),),
+                  SizedBox(
+                    height: 80,
+                    width: 120,
+                    child: TimePickerCustom(
+                      onTimeSelected: onTimeSelected,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -84,7 +101,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               onPressed: isProceedEnabled
                   ? () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Proceeding a booking...')),
+                        const SnackBar(
+                            content: Text('Proceeding a booking...')),
                       );
                       // Navigator.push(
                       //   context,
@@ -107,6 +125,3 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 }
-
-
-
