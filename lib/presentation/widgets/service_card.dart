@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/service_model.dart';
-import '../../widgets/service_cart_provider.dart';
+import '../../models/service_model.dart';
+import 'service_cart_provider.dart';
 
 class ServiceCard extends StatelessWidget {
   final ServiceModel service;
   final ServiceCartProvider cartProvider;
 
   const ServiceCard({
-    Key? key,
+    super.key,
     required this.service,
     required this.cartProvider,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

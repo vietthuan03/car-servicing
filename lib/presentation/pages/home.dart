@@ -1,6 +1,8 @@
 import 'package:car_servicing/presentation/pages/services/select_service.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/bottom_nav_bar.dart';
+
 class Home extends StatelessWidget {
   const Home({super.key});
 
@@ -22,20 +24,20 @@ class Home extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 0),
     );
   }
 
   Widget _buildUserGreeting() {
-    return Row(
+    return const Row(
       children: [
-        const CircleAvatar(
+        CircleAvatar(
           backgroundImage: AssetImage('images/car.jpg'),
           // Replace with actual user image
           radius: 25,
         ),
-        const SizedBox(width: 10),
-        const Text('Hello Thuan', style: TextStyle(fontSize: 20)),
+        SizedBox(width: 10),
+        Text('Hello Thuan', style: TextStyle(fontSize: 20)),
       ],
     );
   }
@@ -114,17 +116,6 @@ class Home extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildBottomNavigationBar() {
-    return BottomNavigationBar(
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart), label: 'Vehicles'),
-        BottomNavigationBarItem(icon: Icon(Icons.receipt), label: 'Records'),
-      ],
     );
   }
 }

@@ -1,7 +1,16 @@
 import 'package:car_servicing/presentation/widgets/service_cart_provider.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/service_model.dart';
+
 class ServiceCard2 extends StatelessWidget {
+  final ServiceModel service;
+
+  const ServiceCard2({
+    super.key,
+    required this.service,
+  });
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -30,7 +39,7 @@ class ServiceCard2 extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Baleno',
+                                service.title,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -38,7 +47,7 @@ class ServiceCard2 extends StatelessWidget {
                               ),
                               SizedBox(height: 8),
                               Text(
-                                'MH 04 CD 123',
+                                service.price,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,

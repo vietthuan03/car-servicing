@@ -4,22 +4,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/service_model.dart';
+import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/service_cart_provider.dart';
 import '../../widgets/service_order.dart';
 
 class VehicleScreen extends StatelessWidget {
-  final ServiceRepository serviceRepository =
-      ServiceRepository(firebaseService: FirebaseService());
+  final ServiceRepository serviceRepository = ServiceRepository();
+  final ServiceModel service;
+
+  VehicleScreen({
+    super.key,
+    required this.service,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF9F9FA),
+      backgroundColor: const Color(0xFFF9F9FA),
       appBar: AppBar(
         title: const Text('Hello Thuan'),
-        actions: [
+        actions: const [
           Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: EdgeInsets.only(right: 16.0),
             child: CircleAvatar(
               radius: 20,
               backgroundImage: AssetImage('assets/user.jpg'),
@@ -27,45 +33,16 @@ class VehicleScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              size: 30,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.directions_car,
-              size: 30,
-            ),
-            label: 'Vehicles',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.file_copy,
-              size: 30,
-            ),
-            label: 'Records',
-          ),
-        ],
+      bottomNavigationBar: const CustomBottomNavigationBar(
         currentIndex: 1,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        onTap: (index) {
-          print('Tapped index: $index');
-        },
-        backgroundColor: Color(0xFFFFFFFF), // Set background color to white
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            ServiceCard2(),
+            ServiceCard2(
+              service: service,
+            ),
             Divider(
               color: Colors.grey[300],
               thickness: 1,
