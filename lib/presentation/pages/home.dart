@@ -1,121 +1,48 @@
-import 'package:car_servicing/presentation/pages/services/select_service.dart';
+import 'package:car_servicing/presentation/pages/auth/Login.dart';
+import 'package:car_servicing/presentation/widgets/button_widget.dart';
+import 'package:car_servicing/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/bottom_nav_bar.dart';
-
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+  static const String id = 'home_screen';
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final _auth = AuthService();
+  final user= FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        // Wrap Column in SingleChildScrollView
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              _buildUserGreeting(),
-              _buildSearchBar(),
-              _buildServiceBanner(),
-              _buildServiceSelectionGrid(context),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 0),
-    );
-  }
-
-  Widget _buildUserGreeting() {
-    return const Row(
-      children: [
-        CircleAvatar(
-          backgroundImage: AssetImage('images/car.jpg'),
-          // Replace with actual user image
-          radius: 25,
-        ),
-        SizedBox(width: 10),
-        Text('Hello Thuan', style: TextStyle(fontSize: 20)),
-      ],
-    );
-  }
-
-  Widget _buildSearchBar() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: 'Search for a car service',
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-          prefixIcon: const Icon(Icons.search),
+      body:    Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Welcome ${user?.email}",
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+            ),
+            const SizedBox(height: 20),
+            CustomButton(
+              label: "Sign Out",
+              onPressed: () async{
+                await _auth.signout(context);
+                goToLogin(context);
+              },
+            )
+          ],
         ),
       ),
     );
   }
-
-  Widget _buildServiceBanner() {
-    return Container(
-      height: 150,
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      child: Image.asset('images/banner.png',
-          fit: BoxFit.cover), // Replace with actual banner image
-    );
-  }
-
-  Widget _buildServiceSelectionGrid(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: GridView.count(
-        shrinkWrap: true,
-        // Enable GridView to take only necessary space
-        physics: const NeverScrollableScrollPhysics(),
-        // Disable GridView's scroll
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 3,
-        children: [
-          _buildServiceIcon(context, 'Car Service', Icons.car_repair),
-          _buildServiceIcon(context, 'Tyres & Wheel Care', Icons.settings),
-          _buildServiceIcon(context, 'Denting & Painting', Icons.brush),
-          _buildServiceIcon(context, 'AC Service & Repair', Icons.ac_unit),
-          _buildServiceIcon(context, 'Car Cleaning', Icons.cleaning_services),
-          _buildServiceIcon(context, 'Batteries', Icons.battery_charging_full),
-          _buildServiceIcon(context, 'Clutch & Gearbox', Icons.build),
-          _buildServiceIcon(context, 'Dry clean', Icons.local_laundry_service),
-          _buildServiceIcon(context, 'Car Wash', Icons.local_car_wash),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildServiceIcon(BuildContext context, String label, IconData icon) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SelectServicePage()),
-        );
-      },
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 36, color: Colors.blue),
-              // const SizedBox(height: 2),
-              Text(label,
-                  textAlign: TextAlign.center, style: TextStyle(fontSize: 6)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  goToLogin(BuildContext context) => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Login()),
+      );
 }
