@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+        debugShowCheckedModeBanner: false, // Tắt debug banner
         home: Home());
   }
 }
