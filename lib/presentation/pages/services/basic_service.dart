@@ -9,7 +9,8 @@ class BasicServicePage extends StatelessWidget {
   // Di chuyển khai báo vào trong build
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<_ReviewWidgetState> reviewWidgetKey = GlobalKey<_ReviewWidgetState>();
+    final GlobalKey<_ReviewWidgetState> reviewWidgetKey =
+        GlobalKey<_ReviewWidgetState>();
 
     return Scaffold(
       appBar: AppBar(
@@ -17,8 +18,15 @@ class BasicServicePage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Căn chỉnh các phần tử ra ngoài biên
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // Căn chỉnh các phần tử ra ngoài biên
           children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
             const Text(
               'Basic Service',
               style: TextStyle(
@@ -30,7 +38,8 @@ class BasicServicePage extends StatelessWidget {
             TextButton(
               onPressed: () {
                 _showAddCommentDialog(context, (name, comment, rating) {
-                  reviewWidgetKey.currentState?.addReview(name, comment, rating);
+                  reviewWidgetKey.currentState
+                      ?.addReview(name, comment, rating);
                 });
               },
               child: const Text(
@@ -43,7 +52,6 @@ class BasicServicePage extends StatelessWidget {
             ),
           ],
         ),
-
       ),
       body: Container(
         color: Colors.grey[100],
@@ -140,25 +148,26 @@ class BasicServicePage extends StatelessWidget {
   List<Widget> _buildServiceItems(List<String> items) {
     return items
         .map((item) => Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        children: [
-          Image.asset(
-            'images/tick.png',
-          ),
-          const SizedBox(width: 8),
-          Text(
-            item,
-            style: const TextStyle(fontSize: 14),
-          ),
-        ],
-      ),
-    ))
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: Row(
+                children: [
+                  Image.asset(
+                    'images/tick.png',
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    item,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ],
+              ),
+            ))
         .toList();
   }
 
   // Hàm để hiển thị hộp thoại thêm comment với nhiều trường thông tin
-  void _showAddCommentDialog(BuildContext context, Function(String, String, double) onAddReview) {
+  void _showAddCommentDialog(
+      BuildContext context, Function(String, String, double) onAddReview) {
     final TextEditingController _nameController = TextEditingController();
     final TextEditingController _commentController = TextEditingController();
     double _rating = 3.0;
@@ -229,8 +238,10 @@ class BasicServicePage extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        onAddReview(_nameController.text, _commentController.text, _rating);
-                        Navigator.of(context).pop(); // Đóng hộp thoại sau khi lưu
+                        onAddReview(_nameController.text,
+                            _commentController.text, _rating);
+                        Navigator.of(context)
+                            .pop(); // Đóng hộp thoại sau khi lưu
                       },
                       child: const Text("Add"),
                     ),
@@ -254,9 +265,18 @@ class ReviewWidget extends StatefulWidget {
 
 class _ReviewWidgetState extends State<ReviewWidget> {
   List<Map<String, dynamic>> reviews = [
-    {"name": "Gautam Singh", "comment": "The Basic Service package is a good choice to keep normal things in check. Highly recommended!", "rating": 4.5},
+    {
+      "name": "Gautam Singh",
+      "comment":
+          "The Basic Service package is a good choice to keep normal things in check. Highly recommended!",
+      "rating": 4.5
+    },
     {"name": "Gautam Singh", "comment": "Highly recommended!", "rating": 4.0},
-    {"name": "huyle", "comment": "huyle comment to from vietnam", "rating": 4.5},
+    {
+      "name": "huyle",
+      "comment": "huyle comment to from vietnam",
+      "rating": 4.5
+    },
   ];
 
   // Hàm để thêm review
@@ -283,39 +303,46 @@ class _ReviewWidgetState extends State<ReviewWidget> {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        ...reviews.asMap().map((index, review) {
-          return MapEntry(
-            index,
-            Card(
-              color: Colors.grey[100],
-              child: ListTile(
-                title: Text(review["name"], style: TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(review["comment"]),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: List.generate(5, (i) {
-                        return Icon(
-                          i < review["rating"] ? Icons.star : Icons.star_border,
-                          color: Colors.yellow,
-                        );
-                      }),
+        ...reviews
+            .asMap()
+            .map((index, review) {
+              return MapEntry(
+                index,
+                Card(
+                  color: Colors.grey[100],
+                  child: ListTile(
+                    title: Text(review["name"],
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(review["comment"]),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: List.generate(5, (i) {
+                            return Icon(
+                              i < review["rating"]
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: Colors.yellow,
+                            );
+                          }),
+                        ),
+                      ],
                     ),
-                  ],
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete, color: Colors.red),
+                      onPressed: () {
+                        // Xóa review
+                        deleteReview(index);
+                      },
+                    ),
+                  ),
                 ),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                    // Xóa review
-                    deleteReview(index);
-                  },
-                ),
-              ),
-            ),
-          );
-        }).values.toList(),
+              );
+            })
+            .values
+            .toList(),
       ],
     );
   }

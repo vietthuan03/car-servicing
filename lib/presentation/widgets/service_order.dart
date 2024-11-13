@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 import '../../models/service_model.dart';
 
-class ServiceCard2 extends StatelessWidget {
+class ServiceOrder extends StatelessWidget {
   final ServiceModel service;
 
-  const ServiceCard2({
+  const ServiceOrder({
     super.key,
     required this.service,
   });

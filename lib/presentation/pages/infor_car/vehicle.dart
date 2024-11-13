@@ -9,7 +9,7 @@ import '../../widgets/service_cart_provider.dart';
 import '../../widgets/service_order.dart';
 
 class VehicleScreen extends StatelessWidget {
-  final ServiceRepository serviceRepository = ServiceRepository();
+  final ServiceRepository _serviceRepository = ServiceRepository();
   final ServiceModel service;
 
   VehicleScreen({
@@ -36,21 +36,35 @@ class VehicleScreen extends StatelessWidget {
       bottomNavigationBar: const CustomBottomNavigationBar(
         currentIndex: 1,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            ServiceCard2(
-              service: service,
+      body: StreamBuilder<ServiceModel>(
+        stream: _serviceRepository.getServiceById(service.id),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return const Center(child: Text('Something went wrong!'));
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: Text('Service not found'));
+          }
+
+          final updatedService = snapshot.data!;
+
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                ServiceOrder(service: updatedService),
+                const Divider(
+                  color: Colors.grey,
+                  thickness: 1,
+                  height: 32,
+                ),
+              ],
             ),
-            Divider(
-              color: Colors.grey[300],
-              thickness: 1,
-              height: 32,
-            ),
-            // ServiceCard(),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
