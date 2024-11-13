@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/bottom_action_add.dart';
-import '../widgets/review_widget.dart'; // Import review widget
+import '../../widgets/bottom_action_add.dart';
+import '../../widgets/review_widget.dart'; // Import review widget
 
 class BasicServicePage extends StatelessWidget {
   const BasicServicePage({Key? key}) : super(key: key);
@@ -33,7 +33,8 @@ class BasicServicePage extends StatelessWidget {
         ),
       ),
       body: Container(
-        color: Colors.grey[100], // Background color for the entire scrollable area
+        color: Colors.grey[100],
+        // Background color for the entire scrollable area
         child: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(14.0),
@@ -56,7 +57,8 @@ class BasicServicePage extends StatelessWidget {
                           height: 24,
                         ),
                         SizedBox(width: 8),
-                        const Text('4 Hrs Taken', style: TextStyle(fontSize: 14)),
+                        const Text('4 Hrs Taken',
+                            style: TextStyle(fontSize: 14)),
                       ],
                     ),
                     SizedBox(height: 8),

@@ -1,9 +1,16 @@
+import 'package:car_servicing/repository/service_repo.dart';
+import 'package:car_servicing/services/firebase_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import '../../widgets/service_card.dart';
-import '../../widgets/service_card2.dart';
+import 'package:provider/provider.dart';
+import '../../../models/service_model.dart';
+import '../../widgets/service_cart_provider.dart';
+import '../../widgets/service_order.dart';
 
 class VehicleScreen extends StatelessWidget {
+  final ServiceRepository serviceRepository =
+      ServiceRepository(firebaseService: FirebaseService());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,33 +32,31 @@ class VehicleScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              size: 30, // Kích thước icon cho Home
+              size: 30,
             ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.directions_car,
-              size: 30, // Kích thước icon cho Vehicles
+              size: 30,
             ),
             label: 'Vehicles',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.file_copy,
-              size: 30, // Kích thước icon cho Records
+              size: 30,
             ),
             label: 'Records',
           ),
         ],
         currentIndex: 1,
-        // Set initial index to 1 for Vehicles screen
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         onTap: (index) {
-          // Handle navigation based on index
           print('Tapped index: $index');
         },
         backgroundColor: Color(0xFFFFFFFF), // Set background color to white

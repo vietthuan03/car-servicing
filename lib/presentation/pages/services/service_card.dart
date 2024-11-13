@@ -1,15 +1,22 @@
-import 'package:car_servicing/models/service_model.dart';
 import 'package:flutter/material.dart';
+
+import '../../../models/service_model.dart';
+import '../../widgets/service_cart_provider.dart';
 
 class ServiceCard extends StatelessWidget {
   final ServiceModel service;
+  final ServiceCartProvider cartProvider;
 
-  const ServiceCard({Key? key, required this.service}) : super(key: key);
+  const ServiceCard({
+    Key? key,
+    required this.service,
+    required this.cartProvider,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(12),
+      margin: const EdgeInsets.all(12),
       elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
@@ -20,49 +27,62 @@ class ServiceCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              service.imageUrl, // Load local asset images
+              service.imageUrl,
               height: 80,
               width: 80,
               fit: BoxFit.cover,
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     service.title,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     service.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     service.price,
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
                   ),
                 ],
               ),
             ),
             ElevatedButton(
               onPressed: () {
+                cartProvider.addService();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${service.title} added to cart')),
+                  SnackBar(
+                    content: Text('${service.title} added to cart'),
+                    duration: const Duration(seconds: 1),
+                    // Thời gian hiển thị
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    backgroundColor: Colors.black87,
+                  ),
                 );
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               ),
-              child: Text('ADD'),
+              child: const Text('ADD'),
             ),
           ],
         ),

@@ -1,4 +1,4 @@
-import 'package:car_servicing/presentation/pages/select_service.dart';
+import 'package:car_servicing/presentation/pages/services/select_service.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -122,7 +122,7 @@ class Home extends StatelessWidget {
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car), label: 'Vehicles'),
+            icon: Icon(Icons.shopping_cart), label: 'Vehicles'),
         BottomNavigationBarItem(icon: Icon(Icons.receipt), label: 'Records'),
       ],
     );
