@@ -1,6 +1,6 @@
 name: car_servicing
 description: "App for car maintenance"
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
@@ -30,8 +30,20 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
-
   uses-material-design: true
 
   assets:
-    - assets/images/
+    - assets/images/banner.png
+    - assets/images/base_1.png
+    - assets/images/base_2.png
+    - assets/images/base_3.png
+    - assets/images/base.png
+    - assets/images/basic_car.png
+    - assets/images/car.jpg
+    - assets/images/card.png
+    - assets/images/comprehensive_car.png
+    - assets/images/google_pay.png
+    - assets/images/pay_after.png
+    - assets/images/pay_tm.png
+    - assets/images/standard_car.png
+    - assets/images/tick.png

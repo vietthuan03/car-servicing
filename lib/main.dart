@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: FirebaseOptions(
+    options: const FirebaseOptions(
       apiKey: "AIzaSyCK1ycvjMVqlkBoOCio0td0l3QGBs8j3-E",
       appId: "1:173987522263:android:68c5afef34ef409f07f292",
       messagingSenderId: "173987522263",
@@ -25,7 +25,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Home(),
+      // home: Home(),
+      home: CheckoutScreen(),
     );
   }
 }
