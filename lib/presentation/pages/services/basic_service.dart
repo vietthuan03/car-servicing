@@ -1,11 +1,19 @@
+import 'package:car_servicing/models/service_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/bottom_action_add.dart';
 import '../../widgets/review_widget.dart'; // Import review widget
 
-class BasicServicePage extends StatelessWidget {
-  const BasicServicePage({Key? key}) : super(key: key);
+class BasicServicePage extends StatefulWidget {
+  const BasicServicePage({super.key});
 
+  static const String id = "basic_service";
+
+  @override
+  _BasicServiceState createState() => _BasicServiceState();
+}
+
+class _BasicServiceState extends State<BasicServicePage> {
   // Di chuyển khai báo vào trong build
   @override
   Widget build(BuildContext context) {
@@ -72,7 +80,7 @@ class BasicServicePage extends StatelessWidget {
                     Row(
                       children: [
                         Image.asset(
-                          'images/base.png',
+                          'assets/images/base.png',
                           width: 24,
                           height: 24,
                         ),
@@ -84,7 +92,8 @@ class BasicServicePage extends StatelessWidget {
                     SizedBox(height: 8),
                     Row(
                       children: [
-                        Image.asset('images/base_1.png', width: 24, height: 24),
+                        Image.asset('assets/images/base_1.png',
+                            width: 24, height: 24),
                         SizedBox(width: 8),
                         const Text('1000 Kms or 1 Month Warranty',
                             style: TextStyle(fontSize: 14)),
@@ -93,7 +102,8 @@ class BasicServicePage extends StatelessWidget {
                     SizedBox(height: 8),
                     Row(
                       children: [
-                        Image.asset('images/base_2.png', width: 24, height: 24),
+                        Image.asset('assets/images/base_2.png',
+                            width: 24, height: 24),
                         SizedBox(width: 8),
                         const Text('Every 5000 Kms or 3 Months',
                             style: TextStyle(fontSize: 14)),
@@ -102,7 +112,8 @@ class BasicServicePage extends StatelessWidget {
                     SizedBox(height: 8),
                     Row(
                       children: [
-                        Image.asset('images/base_3.png', width: 24, height: 24),
+                        Image.asset('assets/images/base_3.png',
+                            width: 24, height: 24),
                         SizedBox(width: 8),
                         const Text('Free Pick-up or Drop',
                             style: TextStyle(fontSize: 14)),
@@ -152,7 +163,7 @@ class BasicServicePage extends StatelessWidget {
               child: Row(
                 children: [
                   Image.asset(
-                    'images/tick.png',
+                    'assets/images/tick.png',
                   ),
                   const SizedBox(width: 8),
                   Text(

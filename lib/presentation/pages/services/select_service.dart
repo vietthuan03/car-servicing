@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../../../models/service_model.dart';
 import '../../../repository/service_repo.dart';
-import '../../widgets/service_cart_provider.dart';
+import '../../../provider/service_cart_provider.dart';
 import '../home.dart';
 import '../../widgets/service_card.dart';
 import '../infor_car/vehicle.dart';
 
 class SelectServicePage extends StatefulWidget {
   const SelectServicePage({super.key});
+
+  static const String id = 'select_service';
 
   @override
   _SelectServicePageState createState() => _SelectServicePageState();
@@ -47,28 +48,28 @@ class _SelectServicePageState extends State<SelectServicePage> {
             return const Center(child: Text('No services available'));
           }
 
-          // Lấy danh sách dịch vụ
+          // Get list of services
           final List<ServiceModel> services = snapshot.data!;
 
           return Column(
             children: [
-              // Expanded ListView hiển thị các dịch vụ
+              // Expanded ListView displaying services
               Expanded(
                 child: ListView.builder(
                   itemCount: services.length,
                   itemBuilder: (context, index) {
+                    final service = services[index];
                     return Consumer<ServiceCartProvider>(
                       builder: (context, cartProvider, child) {
                         return ServiceCard(
-                          service: services[index],
-                          cartProvider: cartProvider,
-                        );
+                            service: service, // Truyền đối tượng ServiceModel
+                            cartProvider: cartProvider);
                       },
                     );
                   },
                 ),
               ),
-              // Phần hiển thị tổng số dịch vụ đã chọn và nút chuyển đến VehicleScreen
+              // Display total selected services and button to navigate to VehicleScreen
               Consumer<ServiceCartProvider>(
                 builder: (context, cartProvider, child) {
                   return Container(
@@ -85,27 +86,26 @@ class _SelectServicePageState extends State<SelectServicePage> {
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
-                            if (services.isNotEmpty) {
-                              // Lấy dịch vụ đầu tiên trong danh sách làm ví dụ
+                            if (cartProvider.serviceCount > 0) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      VehicleScreen(service: services.first),
+                                  builder: (context) => const VehicleScreen(),
                                 ),
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                    content:
-                                        Text('No services available to view')),
+                                  content: Text(
+                                      'Please add services to the cart first'),
+                                ),
                               );
                             }
                           },
                           icon: const Icon(Icons.shopping_cart),
                           label: const Text('Go To Cart'),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
+                            // backgroundColor: Colors.black,
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 8),
                           ),

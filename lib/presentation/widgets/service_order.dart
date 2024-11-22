@@ -1,16 +1,19 @@
 import 'package:car_servicing/presentation/pages/checkout.dart';
-import 'package:car_servicing/presentation/widgets/service_cart_provider.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/service_model.dart';
 
-class ServiceOrder extends StatelessWidget {
-  final ServiceModel service;
+class ServiceOrder extends StatefulWidget {
+  const ServiceOrder({super.key});
 
-  const ServiceOrder({
-    super.key,
-    required this.service,
-  });
+  static const String id = 'service_order';
+
+  @override
+  _ServiceOrderState createState() => _ServiceOrderState();
+}
+
+class _ServiceOrderState extends State<ServiceOrder> {
+  late ServiceModel service;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,7 @@ class ServiceOrder extends StatelessWidget {
                               ),
                               SizedBox(height: 8),
                               Text(
-                                service.price,
+                                '${service.price} VND',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -71,10 +74,11 @@ class ServiceOrder extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Image.asset(
-                                'img/car.png',
+                              Image.network(
+                                service.imageUrl,
+                                width: 100,
                                 height: 100,
-                                width: 130,
+                                fit: BoxFit.cover,
                               ),
                             ],
                           ),

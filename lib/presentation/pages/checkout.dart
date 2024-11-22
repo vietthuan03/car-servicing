@@ -1,5 +1,6 @@
-import 'package:car_servicing/presentation/widgets/date_time_custom.dart';
+import 'package:car_servicing/presentation/pages/payment.dart';
 import 'package:flutter/material.dart';
+import '../widgets/date_time_custom.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -14,8 +15,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void _onDateSelected(DateTime dateTime) {
     final now = DateTime.now();
     final bool isValidTime = dateTime.isAfter(now) &&
-      (dateTime.hour > 8 || (dateTime.hour == 8 && dateTime.minute >= 0)) &&
-      (dateTime.hour < 17 || (dateTime.hour == 17 && dateTime.minute == 0)); // Ensure time between 08:00 and 17:00
+        (dateTime.hour > 8 || (dateTime.hour == 8 && dateTime.minute >= 0)) &&
+        (dateTime.hour < 17 ||
+            (dateTime.hour == 17 &&
+                dateTime.minute == 0)); // Ensure time between 08:00 and 17:00
 
     setState(() {
       isDateTimeSelected = isValidTime;
@@ -28,6 +31,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       appBar: AppBar(
         title: const Text('Checkout'),
         backgroundColor: Colors.blue,
+        leading: IconButton(
+          // Back button
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -75,9 +85,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ElevatedButton(
               onPressed: isDateTimeSelected
                   ? () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Proceed to the next screen...'),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const PaymentPage(),
                         ),
                       );
                     }

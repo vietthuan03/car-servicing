@@ -1,3 +1,4 @@
+import 'package:car_servicing/presentation/confir.dart';
 import 'package:car_servicing/presentation/pages/checkout.dart';
 import 'package:flutter/material.dart';
 
@@ -83,22 +84,22 @@ class _PaymentScreenState extends State<PaymentPage> {
                 _buildPaymentOption(
                   'paytm',
                   'Pay via PayTM',
-                  'images/pay_tm.png',
+                  'assets/images/pay_tm.png',
                 ),
                 _buildPaymentOption(
                   'gpay',
                   'Pay via Google Pay',
-                  'images/google_pay.png',
+                  'assets/images/google_pay.png',
                 ),
                 _buildPaymentOption(
                   'card',
                   'Pay via Debit/Credit Card',
-                  'images/card.png',
+                  'assets/images/card.png',
                 ),
                 _buildPaymentOption(
                   'pay_after',
                   'Pay after the service',
-                  'images/pay_after.png',
+                  'assets/images/pay_after.png',
                 ),
                 const SizedBox(height: 100),
                 // Extra space at the bottom to avoid overflow
@@ -118,7 +119,13 @@ class _PaymentScreenState extends State<PaymentPage> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ConfirmationScreen(),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 padding:
