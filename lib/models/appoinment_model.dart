@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AppointmentModel {
-  final String? id;
-  final String serviceId;
-  final String userId;
-  final String carId; // Tham chiếu đến ID của xe
-  final DateTime appointmentDate;
-  final String status; // e.g., "scheduled", "completed", "canceled"
+  String? id;
+  String? serviceId;
+  String? userId;
+  String? carId; // Tham chiếu đến ID của xe
+  DateTime? appointmentDate;
+  String status; // e.g., "ongoing", "completed"
 
   AppointmentModel({
     this.id,
-    required this.serviceId,
-    required this.userId,
-    required this.carId,
-    required this.appointmentDate,
-    this.status = "scheduled",
+    this.serviceId,
+    this.userId,
+    this.carId,
+    this.appointmentDate,
+    this.status = "completed",
   });
 
   // Tạo AppointmentModel từ dữ liệu Firebase
@@ -26,7 +26,7 @@ class AppointmentModel {
       userId: data['userId'] ?? '',
       carId: data['carId'] ?? '',
       appointmentDate: (data['appointmentDate'] as Timestamp).toDate(),
-      status: data['status'] ?? 'scheduled',
+      status: data['status'] ?? 'completed',
     );
   }
 

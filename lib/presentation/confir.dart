@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'pages/Home.dart';
+
 class ConfirmationScreen extends StatelessWidget {
   const ConfirmationScreen({super.key});
 
   void _goToHome(BuildContext context) {
     // Navigate to the home screen. Modify this depending on your app's home screen route.
-    Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+    // Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(Home.id, (route) => false);
   }
 
   @override

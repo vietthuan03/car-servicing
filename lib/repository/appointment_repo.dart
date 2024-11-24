@@ -6,8 +6,8 @@ class AppointmentRepository {
       FirebaseFirestore.instance.collection('appointments');
 
   // Thêm lịch hẹn mới
-  Future<void> bookAppointment(AppointmentModel appointment) async {
-    await _appointments.add(appointment.toFirestore());
+  Future<void> bookAppointment(AppointmentModel appointment, String userId) async {
+    await _appointments.doc(appointment.id).set(appointment.toFirestore());
   }
 
   // Lấy danh sách lịch hẹn của người dùng

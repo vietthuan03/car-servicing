@@ -47,6 +47,16 @@ class AuthService {
     }
   }
 
+  Future<String?> getUserName(String uid) async {
+    try {
+      DocumentSnapshot doc = await _firestore.collection('Users').doc(uid).get();
+      return doc['name'] as String?;
+    } catch (e) {
+      debugPrint("Error fetching user name: $e");
+      return null;
+    }
+  }
+
   //login with email & pass
   Future<User?> loginUserWithEmailAndPassword(String email,String password,context) async{
     try {
@@ -81,5 +91,9 @@ class AuthService {
       debugPrint("Error: $e");
       snackbarMessage(message: "Something went wrong. Please try again later.",context: context,).show();
     }
+  }
+
+  String? getCurrentUserId() {
+    return _auth.currentUser?.uid;
   }
 }

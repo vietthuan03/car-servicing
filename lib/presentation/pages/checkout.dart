@@ -1,5 +1,8 @@
 import 'package:car_servicing/presentation/pages/payment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../models/appoinment_model.dart';
+import '../../repository/appointment_repo.dart';
 import '../widgets/date_time_custom.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -11,6 +14,8 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   bool isDateTimeSelected = false;
+  DateTime? selectedDateTime;
+  final AppointmentRepository _appointmentRepository = AppointmentRepository();
 
   void _onDateSelected(DateTime dateTime) {
     final now = DateTime.now();
@@ -22,7 +27,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     setState(() {
       isDateTimeSelected = isValidTime;
+      if (isValidTime) {
+        selectedDateTime = dateTime;
+      }
     });
+  }
+
+  final userId = FirebaseAuth.instance.currentUser!.uid;
+
+  Future<void> _proceedToPayment() async {
+    if (selectedDateTime != null) {
+      final appointment = AppointmentModel(
+        appointmentDate: selectedDateTime,
+        userId: userId,
+        // carId: 'your_car_id', // Replace with actual car ID
+        // serviceId: 'your_service_id', // Replace with actual service ID
+      );
+      await _appointmentRepository.bookAppointment(
+          appointment, userId);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const PaymentPage(),
+        ),
+      );
+        }
   }
 
   @override
@@ -44,13 +72,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Add Pick-up Address',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black45,
-              ),
-            ),
             const SizedBox(height: 16),
             const Text(
               'When do you want the service?',
@@ -83,15 +104,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: isDateTimeSelected
-                  ? () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const PaymentPage(),
-                        ),
-                      );
-                    }
-                  : null,
+              onPressed: isDateTimeSelected ? _proceedToPayment : null,
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 minimumSize: const Size(double.infinity, 50),

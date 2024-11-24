@@ -2,6 +2,7 @@ import 'package:car_servicing/presentation/pages/infor_car/add_car_screen.dart';
 import 'package:car_servicing/presentation/pages/services/select_service.dart';
 import 'package:car_servicing/presentation/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:car_servicing/services/Auth_service.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,6 +14,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomePage extends State<Home> {
+  String? userName;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserName();
+  }
+
+  Future<void> _fetchUserName() async {
+    final authService = AuthService();
+    final uid = authService.getCurrentUserId();
+    if (uid != null) {
+      final name = await authService.getUserName(uid);
+      setState(() {
+        userName = name;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +69,7 @@ class _HomePage extends State<Home> {
             radius: 25,
           ),
           const SizedBox(width: 10),
-          const Text('Hello Thuan', style: TextStyle(fontSize: 20)),
+          Text('Hello ${userName ?? 'User'}', style: const TextStyle(fontSize: 20)),
         ],
       ),
     );

@@ -4,11 +4,14 @@ import '../models/appoinment_model.dart';
 import '../repository/appointment_repo.dart';
 
 class AppointmentViewModel extends ChangeNotifier {
-  final AppointmentRepository _repository = AppointmentRepository();
+  final  _repository = AppointmentRepository();
 
   // Đặt lịch hẹn
-  Future<void> bookAppointment(AppointmentModel appointment) async {
-    await _repository.bookAppointment(appointment);
+  Future<void> bookAppointment(AppointmentModel appointment, String userId, String carId, String serviceId) async {
+    appointment.userId = userId;
+    appointment.carId = carId;
+    appointment.serviceId = serviceId;
+    await _repository.bookAppointment(appointment, userId);
     notifyListeners();
   }
 
