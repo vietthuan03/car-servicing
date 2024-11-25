@@ -1,4 +1,6 @@
+import 'package:car_servicing/presentation/pages/infor_car/vehicle.dart';
 import 'package:car_servicing/presentation/pages/record/records_screen.dart';
+import 'package:car_servicing/presentation/pages/settings.dart';
 import 'package:flutter/material.dart';
 import '../pages/home.dart';
 
@@ -26,7 +28,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         // Điều hướng đến trang VehicleScreen
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const Home()),
+          MaterialPageRoute(builder: (context) => const VehicleScreen()),
         );
         break;
       case 2:
@@ -34,6 +36,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const RecordsScreen()),
+        );
+        break;
+      case 3:
+        // Điều hướng đến trang RecordsScreen
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Settings()),
         );
         break;
     }
@@ -63,6 +72,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
             size: 30,
           ),
           label: 'Records',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.settings,
+            size: 30,
+          ),
+          label: 'Settings',
         ),
       ],
       currentIndex: currentIndex,

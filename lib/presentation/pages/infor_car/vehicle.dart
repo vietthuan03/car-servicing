@@ -1,12 +1,9 @@
 import 'package:car_servicing/repository/service_repo.dart';
-import 'package:car_servicing/services/firebase_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/service_model.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../../provider/service_cart_provider.dart';
-import '../../widgets/service_order.dart';
 import '../checkout.dart';
 
 class VehicleScreen extends StatefulWidget {
@@ -28,10 +25,11 @@ class _VehicleScreenState extends State<VehicleScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9FA),
       appBar: AppBar(
-        title: const Text('Hello Thuan'),
+        title: const Text('Checkout'),
+        backgroundColor: Colors.blue,
         actions: const [
           Padding(
-            padding: EdgeInsets.only(right: 16.0),
+            padding: EdgeInsets.only(right: 20.0),
             child: CircleAvatar(
               radius: 20,
               backgroundImage: AssetImage('assets/images/car.png'),
@@ -47,26 +45,38 @@ class _VehicleScreenState extends State<VehicleScreen> {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: cartProvider.cartItems.length,
-                itemBuilder: (context, index) {
-                  final service = cartProvider.cartItems.keys.elementAt(index);
-                  final count = cartProvider.cartItems[service]!;
-                  return ListTile(
-                    leading: Image.network(service.imageUrl,
-                        width: 50, height: 50, fit: BoxFit.cover),
-                    title: Text(service.title),
-                    subtitle: Text(
-                        '${service.price} VND x $count = {${service.price} * $count}'),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        cartProvider.removeService(service);
+              child: cartProvider.cartItems.isEmpty
+                  ? Center(
+                      child: Text(
+                        'Your cart is empty. Add services to your cart!',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: cartProvider.cartItems.length,
+                      itemBuilder: (context, index) {
+                        final service =
+                            cartProvider.cartItems.keys.elementAt(index);
+                        final count = cartProvider.cartItems[service]!;
+                        return ListTile(
+                          leading: Image.asset(service.imageUrl,
+                              width: 50, height: 50, fit: BoxFit.cover),
+                          title: Text(service.title),
+                          subtitle: Text(
+                              '${service.price} VND x $count = ${(service.price * count).toStringAsFixed(2)} VND'),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () {
+                              cartProvider.removeService(service);
+                            },
+                          ),
+                        );
                       },
                     ),
-                  );
-                },
-              ),
             ),
             const Divider(
               color: Colors.grey,
@@ -74,16 +84,41 @@ class _VehicleScreenState extends State<VehicleScreen> {
               height: 32,
             ),
             ElevatedButton(
-              onPressed: () {
-                // Điều hướng đến trang Checkout
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const CheckoutScreen()),
-                );
-              },
-              child: const Text('Checkout'),
+              onPressed: cartProvider.cartItems.isEmpty
+                  ? null // Vô hiệu hóa nút nếu giỏ hàng trống
+                  : () {
+                      // Điều hướng đến trang Checkout
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CheckoutScreen()),
+                      );
+                    },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: cartProvider.cartItems.isEmpty
+                    ? Colors.grey // Màu nút khi vô hiệu hóa
+                    : Theme.of(context).canvasColor,
+              ),
+              child: const Text(
+                'CHECKOUT',
+                style: TextStyle(
+                  fontSize: 22, // Tăng kích thước chữ
+                  fontWeight: FontWeight.bold, // In đậm chữ
+                ),
+              ),
             ),
+            if (cartProvider.cartItems.isEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Text(
+                  'Please add services to cart to continue.',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 14,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
           ],
         ),
       ),

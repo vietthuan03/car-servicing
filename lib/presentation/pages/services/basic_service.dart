@@ -1,8 +1,4 @@
-import 'package:car_servicing/models/service_model.dart';
 import 'package:flutter/material.dart';
-
-import '../../widgets/bottom_action_add.dart';
-import '../../widgets/review_widget.dart'; // Import review widget
 
 class BasicServicePage extends StatefulWidget {
   const BasicServicePage({super.key});
@@ -146,8 +142,6 @@ class _BasicServiceState extends State<BasicServicePage> {
                 // Reviews
                 ReviewWidget(key: reviewWidgetKey),
                 SizedBox(height: 8),
-                // Action Button
-                const BottomActionAddWidget(),
               ],
             ),
           ),

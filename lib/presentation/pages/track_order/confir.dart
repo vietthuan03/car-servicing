@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/Home.dart';
+import '../Home.dart';
 
 class ConfirmationScreen extends StatelessWidget {
   const ConfirmationScreen({super.key});

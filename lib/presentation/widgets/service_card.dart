@@ -40,7 +40,7 @@ class _ServiceCardState extends State<ServiceCard> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Hiển thị hình ảnh dịch vụ
-              Image.network(
+              Image.asset(
                 widget.service.imageUrl, // Sử dụng widget.service
                 width: 100,
                 height: 100,

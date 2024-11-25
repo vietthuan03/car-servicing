@@ -36,13 +36,48 @@ class _HomePage extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // Vô hiệu hóa nút Back (←)
+        backgroundColor: Colors.blue, // Màu nền xanh
+        elevation: 0, // Loại bỏ đổ bóng
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Căn đều hai bên
+          children: [
+            // Text 'Hello User'
+            Text(
+              'Hello ${userName ?? 'User'}',
+              style: const TextStyle(
+                fontSize: 20,
+                // color: Colors.white, // Màu chữ trắng
+                fontWeight: FontWeight.bold, // Đậm chữ
+              ),
+            ),
+            // Avatar có điều hướng
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const AddCarScreen(), // Điều hướng đến ViewCarScreen
+                  ),
+                );
+              },
+              child: const CircleAvatar(
+                radius: 20,
+                backgroundImage:
+                    AssetImage('assets/images/car.png'), // Đường dẫn ảnh
+              ),
+            ),
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         // Wrap Column in SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              _buildUserGreeting(context),
               _buildSearchBar(),
               _buildServiceBanner(),
               _buildServiceSelectionGrid(context),
@@ -51,27 +86,6 @@ class _HomePage extends State<Home> {
         ),
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 0),
-    );
-  }
-
-  Widget _buildUserGreeting(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const AddCarScreen()),
-        );
-      },
-      child: Row(
-        children: [
-          const CircleAvatar(
-            backgroundImage: AssetImage('assets/images/car.jpg'),
-            radius: 25,
-          ),
-          const SizedBox(width: 10),
-          Text('Hello ${userName ?? 'User'}', style: const TextStyle(fontSize: 20)),
-        ],
-      ),
     );
   }
 

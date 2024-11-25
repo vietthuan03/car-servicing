@@ -1,3 +1,4 @@
+import 'package:car_servicing/presentation/pages/infor_car/vehicle.dart';
 import 'package:car_servicing/presentation/pages/payment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -43,14 +44,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         // carId: 'your_car_id', // Replace with actual car ID
         // serviceId: 'your_service_id', // Replace with actual service ID
       );
-      await _appointmentRepository.bookAppointment(
-          appointment, userId);
+      await _appointmentRepository.bookAppointment(appointment, userId);
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => const PaymentPage(),
         ),
       );
-        }
+    }
   }
 
   @override
@@ -61,9 +61,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         backgroundColor: Colors.blue,
         leading: IconButton(
           // Back button
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.pushNamed(context, VehicleScreen.id);
           },
         ),
       ),

@@ -38,13 +38,26 @@ class _RecordsScreenState extends State<RecordsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Record'),
+        backgroundColor: Colors.blue,
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: CircleAvatar(
+              radius: 20,
+              backgroundImage: AssetImage('assets/images/car.png'),
+            ),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         // Wrap Column in SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              _buildUserGreeting(context, userName),
+              // _buildUserGreeting(context, userName),
               const SizedBox(height: 16),
               _buildServiceRecord(context),
             ],
@@ -56,26 +69,27 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 }
 
-Widget _buildUserGreeting(BuildContext context, dynamic userName) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AddCarScreen()),
-      );
-    },
-    child: Row(
-      children: [
-        const CircleAvatar(
-          backgroundImage: AssetImage('assets/images/car.jpg'),
-          radius: 25,
-        ),
-        const SizedBox(width: 10),
-        Text('Hello ${userName ?? 'User'}', style: const TextStyle(fontSize: 20)),
-      ],
-    ),
-  );
-}
+// Widget _buildUserGreeting(BuildContext context, dynamic userName) {
+//   return GestureDetector(
+//     onTap: () {
+//       Navigator.push(
+//         context,
+//         MaterialPageRoute(builder: (context) => const AddCarScreen()),
+//       );
+//     },
+//     child: Row(
+//       children: [
+//         const CircleAvatar(
+//           backgroundImage: AssetImage('assets/images/car.png'),
+//           radius: 25,
+//         ),
+//         const SizedBox(width: 10),
+//         Text('Hello ${userName ?? 'User'}',
+//             style: const TextStyle(fontSize: 20)),
+//       ],
+//     ),
+//   );
+// }
 
 Widget _buildServiceRecord(BuildContext context) {
   final userId = FirebaseAuth.instance.currentUser!.uid;

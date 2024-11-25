@@ -1,4 +1,4 @@
-import 'package:car_servicing/presentation/confir.dart';
+import 'package:car_servicing/presentation/pages/track_order/confir.dart';
 import 'package:car_servicing/presentation/pages/checkout.dart';
 import 'package:flutter/material.dart';
 

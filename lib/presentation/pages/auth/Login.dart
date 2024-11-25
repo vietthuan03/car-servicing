@@ -67,7 +67,7 @@ class _LoginState extends State<Login> {
                   label: "Password",
                   hint: "Enter Your Password",
                   controller: _password,
-                  isPass: true,
+                  // isPass: true,
                   errorText: validation.password.error,
                   onChanged: (value) {
                     validation.validatePassword(value);
@@ -193,13 +193,13 @@ Widget _buildSocialBtnRow() {
         _buildSocialBtn(
           () {},
           const AssetImage(
-            "images/facebook_icon.png",
+            "assets/images/facebook_icon.png",
           ),
         ),
         _buildSocialBtn(
           () {},
           const AssetImage(
-            "images/gmail_icon.png",
+            "assets/images/gmail_icon.png",
           ),
         ),
       ],

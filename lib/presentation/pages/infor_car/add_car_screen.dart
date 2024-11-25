@@ -4,11 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-
-import '../../../constants.dart';
 import '../../../models/car_model.dart';
-import '../auth/Login.dart';
 
 class AddCarScreen extends StatefulWidget {
   const AddCarScreen({super.key});
