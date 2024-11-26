@@ -1,5 +1,6 @@
 import 'package:car_servicing/presentation/pages/infor_car/vehicle.dart';
 import 'package:car_servicing/presentation/pages/payment.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,7 @@ import '../../models/appoinment_model.dart';
 import '../../repository/appointment_repo.dart';
 import '../widgets/date_time_custom.dart';
 import '../../provider/service_cart_provider.dart';
+import '../../models/car_model.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -19,6 +21,27 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   bool isDateTimeSelected = false;
   DateTime? selectedDateTime;
   final AppointmentRepository _appointmentRepository = AppointmentRepository();
+  List<CarModel> userCars = [];
+  CarModel? selectedCar;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserCars();
+  }
+
+  Future<void> _fetchUserCars() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final carsSnapshot = await FirebaseFirestore.instance
+        .collection('cars')
+        .where('userId', isEqualTo: uid)
+        .get();
+    setState(() {
+      userCars = carsSnapshot.docs
+          .map((doc) => CarModel.fromFirestore(doc.data(), doc.id))
+          .toList();
+    });
+  }
 
   void _onDateSelected(DateTime dateTime) {
     final now = DateTime.now();
@@ -39,7 +62,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final userId = FirebaseAuth.instance.currentUser!.uid;
 
   Future<void> _proceedToPayment() async {
-    if (selectedDateTime != null) {
+    if (selectedDateTime != null && selectedCar != null) {
       final cartProvider = Provider.of<ServiceCartProvider>(context, listen: false);
       final firstServiceId = cartProvider.cartItems.keys.first.id; // Get the first service ID
 
@@ -47,9 +70,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         appointmentDate: selectedDateTime,
         userId: userId,
         serviceId: firstServiceId, // Use the first service ID
-        // carId: 'your_car_id', // Replace with actual car ID
+        carId: selectedCar!.id,
       );
-      await _appointmentRepository.bookAppointment(appointment, userId,firstServiceId);
+      await _appointmentRepository.bookAppointment(appointment, userId,firstServiceId, selectedCar!.id);
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => const PaymentPage(),
@@ -108,6 +131,26 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
+                  const Text(
+                    'Select Car',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(height: 8),
+                  DropdownButton<CarModel>(
+                    value: selectedCar,
+                    hint: const Text('Select your car', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    items: userCars.map((car) {
+                      return DropdownMenuItem<CarModel>(
+                        value: car,
+                        child: Text('${car.carBrand} - ${car.carPlate}'),
+                      );
+                    }).toList(),
+                    onChanged: (CarModel? newValue) {
+                      setState(() {
+                        selectedCar = newValue;
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
@@ -121,7 +164,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: isDateTimeSelected ? _proceedToPayment : null,
+              onPressed: isDateTimeSelected && selectedCar != null ? _proceedToPayment : null,
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 minimumSize: const Size(double.infinity, 50),

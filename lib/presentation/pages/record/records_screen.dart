@@ -89,7 +89,8 @@ Widget _buildServiceRecord(BuildContext context) {
           itemCount: snapshot.data!.length,
           itemBuilder: (context, index) {
             final appointment = snapshot.data![index];
-            if (appointment.serviceId == null || appointment.serviceId!.isEmpty) {
+            if (appointment.serviceId == null ||
+                appointment.serviceId!.isEmpty) {
               return const Text('Service ID is missing');
             }
             return FutureBuilder<DocumentSnapshot>(
@@ -98,100 +99,239 @@ Widget _buildServiceRecord(BuildContext context) {
                   .doc(appointment.serviceId)
                   .get(),
               builder: (context, serviceSnapshot) {
-                if (serviceSnapshot.connectionState == ConnectionState.waiting) {
+                if (serviceSnapshot.connectionState ==
+                    ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (serviceSnapshot.hasError) {
                   return Text('Error: ${serviceSnapshot.error}');
-                } else if (!serviceSnapshot.hasData || !serviceSnapshot.data!.exists) {
+                } else if (!serviceSnapshot.hasData ||
+                    !serviceSnapshot.data!.exists) {
                   return const Text('Service not found');
                 } else {
                   final service = ServiceModel.fromFirestore(
                       serviceSnapshot.data!.data() as Map<String, dynamic>,
                       serviceSnapshot.data!.id);
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 8.0),
-                    child: Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  service.title,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Text(
-                                    appointment.status.toUpperCase(),
+                  if (appointment.carId == null || appointment.carId!.isEmpty) {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 8.0),
+                      child: Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    service.title,
                                     style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius:
+                                          BorderRadius.circular(4),
+                                    ),
+                                    child: Text(
+                                      appointment.status.toUpperCase(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                "Booking ID: ${appointment.id}",
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              "Booking ID: ${appointment.id}",
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
                               ),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              appointment.carId != null &&
-                                      appointment.carId!.isNotEmpty
-                                  ? appointment.carId!
-                                  : "Car ID: 34PnpibXKtmCKi9xziHd",
-                              style: const TextStyle(
-                                fontSize: 16,
+                              const SizedBox(height: 16),
+                              const Text(
+                                'Car: Unknown Car',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
-                            ),
-                            const SizedBox(height: 8),
-                            const Text(
-                              "DATE",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
+                              const SizedBox(height: 8),
+                              const Text(
+                                "DATE",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
                               ),
-                            ),
-                            Text(
-                              appointment.appointmentDate != null
-                                  ? "${appointment.appointmentDate!.hour}:${appointment.appointmentDate!.minute}  ${appointment.appointmentDate!.day}, ${appointment.appointmentDate!.month}, ${appointment.appointmentDate!.year}"
-                                  : "Date",
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                            const SizedBox(height: 16),
-                            OutlinedButton(
-                              onPressed: () {
-                                // Action for "Book Again"
-                              },
-                              child: const Text("BOOK AGAIN"),
-                            ),
-                          ],
+                              Text(
+                                appointment.appointmentDate != null
+                                    ? "${appointment.appointmentDate!.hour}:${appointment.appointmentDate!.minute}  ${appointment.appointmentDate!.day}, ${appointment.appointmentDate!.month}, ${appointment.appointmentDate!.year}"
+                                    : "Date",
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  OutlinedButton(
+                                    onPressed: () {
+                                      // Action for "Book Again"
+                                    },
+                                    child: const Text("BOOK AGAIN"),
+                                  ),
+                                  OutlinedButton(
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection('appointments')
+                                          .doc(appointment.id)
+                                          .delete();
+                                    },
+                                    child: const Text("DELETE",
+                                        style: TextStyle(color: Colors.red)),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                    );
+                  }
+                  return FutureBuilder<DocumentSnapshot>(
+                    future: FirebaseFirestore.instance
+                        .collection('cars')
+                        .doc(appointment.carId)
+                        .get(),
+                    builder: (context, carSnapshot) {
+                      if (carSnapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (carSnapshot.hasError) {
+                        return Text('Error: ${carSnapshot.error}');
+                      } else if (!carSnapshot.hasData ||
+                          !carSnapshot.data!.exists) {
+                        return const Text('Car not found');
+                      } else {
+                        final carData =
+                            carSnapshot.data!.data() as Map<String, dynamic>;
+                        final carBrand = carData['carBrand'] ?? 'Unknown Car';
+                        final carPlate = carData['carPlate'] ?? 'Unknown Car';
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 8.0),
+                          child: Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        service.title,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 4,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                        child: Text(
+                                          appointment.status.toUpperCase(),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    "Booking ID: ${appointment.id}",
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    'Car: $carBrand - $carPlate',
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  const Text(
+                                    "DATE",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Text(
+                                    appointment.appointmentDate != null
+                                        ? "${appointment.appointmentDate!.hour}:${appointment.appointmentDate!.minute}  ${appointment.appointmentDate!.day}, ${appointment.appointmentDate!.month}, ${appointment.appointmentDate!.year}"
+                                        : "Date",
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          // Action for "Book Again"
+                                        },
+                                        child: const Text("BOOK AGAIN"),
+                                      ),
+                                      OutlinedButton(
+                                        onPressed: () async {
+                                          await FirebaseFirestore.instance
+                                              .collection('appointments')
+                                              .doc(appointment.id)
+                                              .delete();
+                                        },
+                                        child: const Text("DELETE",
+                                            style:
+                                                TextStyle(color: Colors.red)),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
                   );
                 }
               },
