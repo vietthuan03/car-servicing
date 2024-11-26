@@ -9,6 +9,8 @@ import '../widgets/date_time_custom.dart';
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
 
+  static const String id = 'checkout';
+
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();
 }
@@ -40,7 +42,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     if (selectedDateTime != null) {
       final appointment = AppointmentModel(
         appointmentDate: selectedDateTime,
-        userId: userId,
+        userId: userId, id: '',
         // carId: 'your_car_id', // Replace with actual car ID
         // serviceId: 'your_service_id', // Replace with actual service ID
       );

@@ -6,7 +6,7 @@ class AppointmentModel {
   String? userId;
   String? carId; // Tham chiếu đến ID của xe
   DateTime? appointmentDate;
-  String status; // e.g., "ongoing", "completed"
+  String status; // e.g., "confirmed", "ongoing", "completed"
 
   AppointmentModel({
     this.id,
@@ -14,7 +14,7 @@ class AppointmentModel {
     this.userId,
     this.carId,
     this.appointmentDate,
-    this.status = "completed",
+    this.status = "confirmed",
   });
 
   // Tạo AppointmentModel từ dữ liệu Firebase
@@ -26,7 +26,7 @@ class AppointmentModel {
       userId: data['userId'] ?? '',
       carId: data['carId'] ?? '',
       appointmentDate: (data['appointmentDate'] as Timestamp).toDate(),
-      status: data['status'] ?? 'completed',
+      status: data['status'] ?? 'confirmed',
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:car_servicing/firebase_option.dart';
 import 'package:car_servicing/presentation/pages/Home.dart';
+import 'package:car_servicing/presentation/pages/checkout.dart';
 import 'package:car_servicing/presentation/pages/infor_car/vehicle.dart';
 import 'package:car_servicing/presentation/pages/user/EditUserProfile.dart';
 import 'package:car_servicing/presentation/pages/auth/Login.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
           Login.id: (context) => const Login(),
           Registation.id: (context) => const Registation(),
           VehicleScreen.id: (context) => const VehicleScreen(),
+          CheckoutScreen.id: (context) => const CheckoutScreen(),
         },
       ),
     );

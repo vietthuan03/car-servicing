@@ -1,12 +1,13 @@
+import 'package:car_servicing/presentation/pages/checkout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../models/appoinment_model.dart';
 import '../../../services/Auth_service.dart';
 import '../../../viewmodels/appointment_vm.dart';
 import '../../widgets/bottom_nav_bar.dart';
-import '../infor_car/add_car_screen.dart';
 
 class RecordsScreen extends StatefulWidget {
   const RecordsScreen({super.key});
@@ -69,28 +70,6 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 }
 
-// Widget _buildUserGreeting(BuildContext context, dynamic userName) {
-//   return GestureDetector(
-//     onTap: () {
-//       Navigator.push(
-//         context,
-//         MaterialPageRoute(builder: (context) => const AddCarScreen()),
-//       );
-//     },
-//     child: Row(
-//       children: [
-//         const CircleAvatar(
-//           backgroundImage: AssetImage('assets/images/car.png'),
-//           radius: 25,
-//         ),
-//         const SizedBox(width: 10),
-//         Text('Hello ${userName ?? 'User'}',
-//             style: const TextStyle(fontSize: 20)),
-//       ],
-//     ),
-//   );
-// }
-
 Widget _buildServiceRecord(BuildContext context) {
   final userId = FirebaseAuth.instance.currentUser!.uid;
   return StreamBuilder<List<AppointmentModel>>(
@@ -141,7 +120,9 @@ Widget _buildServiceRecord(BuildContext context) {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.green,
+                              color: appointment.status == 'completed'
+                                  ? Colors.blue
+                                  : Colors.green,
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
@@ -187,12 +168,72 @@ Widget _buildServiceRecord(BuildContext context) {
                         style: const TextStyle(fontSize: 14),
                       ),
                       const SizedBox(height: 16),
-                      OutlinedButton(
-                        onPressed: () {
-                          // Action for "Book Again"
-                        },
-                        child: const Text("BOOK AGAIN"),
-                      ),
+                      // Conditional buttons
+                      if (appointment.status == 'completed')
+                        OutlinedButton(
+                          onPressed: () {
+                            // Xử lý logic nút "Book Again"
+                            Navigator.pushReplacementNamed(
+                                context, CheckoutScreen.id);
+                          },
+                          child: const Text("BOOK AGAIN"),
+                        )
+                      else if (appointment.status == 'confirmed' ||
+                          appointment.status == 'ongoing')
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            TextButton(
+                              onPressed: () async {
+                                // Gọi logic Call
+                                const phoneNumber =
+                                    "0935596807"; // Số điện thoại mẫu
+                                final url = Uri.parse("tel:$phoneNumber");
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text("Không thể thực hiện cuộc gọi"),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: const Text(
+                                'CALL',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                // Xử lý logic nút Cancel
+                                // Huỷ appointment
+                                final viewModel =
+                                    Provider.of<AppointmentViewModel>(context,
+                                        listen: false);
+                                await viewModel.cancelAppointment(
+                                  appointment.id!,
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Đã hủy cuộc hẹn."),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                'CANCEL',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                     ],
                   ),
                 ),

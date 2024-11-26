@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../widgets/Button_up_past.dart';
-import '../../widgets/body_call_cancel.dart';
 
 class OngoingService extends StatefulWidget {
   @override
@@ -56,10 +55,7 @@ class _BookingScreenState extends State<OngoingService> {
             ),
             if (!isPastSelected) // upcomingBookingCard sẽ hiển thị khi isPastSelected là false (tức là khi nhấn vào UPCOMING), và _emptyPastMessage sẽ hiển thị khi isPastSelected là true (tức là khi nhấn vào PAST).
               Column(
-                children: [
-                  UpcomingBookingCard(), // Khối đầu tiên
-                  UpcomingBookingCard2(), // Khối thứ hai
-                ],
+                children: [],
               )
             else
               _emptyPastMessage(),

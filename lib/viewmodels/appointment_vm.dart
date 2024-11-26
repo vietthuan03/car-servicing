@@ -1,13 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models/appoinment_model.dart';
 import '../repository/appointment_repo.dart';
 
 class AppointmentViewModel extends ChangeNotifier {
-  final  _repository = AppointmentRepository();
+  final _repository = AppointmentRepository();
 
   // Đặt lịch hẹn
-  Future<void> bookAppointment(AppointmentModel appointment, String userId, String carId, String serviceId) async {
+  Future<void> bookAppointment(AppointmentModel appointment, String userId,
+      String carId, String serviceId) async {
     appointment.userId = userId;
     appointment.carId = carId;
     appointment.serviceId = serviceId;
@@ -25,5 +27,13 @@ class AppointmentViewModel extends ChangeNotifier {
       String appointmentId, String status) async {
     await _repository.updateAppointmentStatus(appointmentId, status);
     notifyListeners();
+  }
+
+  // Huỷ lịch hen
+  Future<void> cancelAppointment(String appointmentId) async {
+    final docRef = FirebaseFirestore.instance
+        .collection('appointments')
+        .doc(appointmentId);
+    await docRef.update({'status': 'cancelled'});
   }
 }
