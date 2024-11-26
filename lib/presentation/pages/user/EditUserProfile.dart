@@ -83,7 +83,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                   const SizedBox(height: 24),
                   const CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('images/dao.jpg'),
+                    backgroundImage: AssetImage('assets/images/car.png'),
                   ),
                   const SizedBox(height: 24),
                   CustomTextField(

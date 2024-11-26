@@ -1,5 +1,6 @@
 import 'package:car_servicing/constants.dart';
 import 'package:car_servicing/presentation/pages/auth/Login.dart';
+import 'package:car_servicing/presentation/pages/settings.dart';
 import 'package:car_servicing/presentation/pages/user/EditUserProfile.dart';
 import 'package:car_servicing/presentation/widgets/button_widget.dart';
 import 'package:car_servicing/services/Auth_service.dart';
@@ -45,7 +46,10 @@ class _UserProfileState extends State<UserProfile> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              // print("click arrow back");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Settings()),
+              );
             },
           ),
           title: const Text('Profile'),
@@ -57,10 +61,11 @@ class _UserProfileState extends State<UserProfile> {
                   children: [
                     const Text(
                       "Please Login to view your profile",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                     ),
                     const SizedBox(height: 16),
-                    Container(
+                    SizedBox(
                       width: 120,
                       child: CustomButton(
                         label: "LOGIN",
@@ -84,7 +89,8 @@ class _UserProfileState extends State<UserProfile> {
                             const SizedBox(height: 16),
                             const CircleAvatar(
                               radius: 50,
-                              backgroundImage: AssetImage('images/dao.jpg'),
+                              backgroundImage:
+                                  AssetImage('assets/images/car.png'),
                             ),
                             const SizedBox(height: 16),
                             Text(
@@ -102,27 +108,26 @@ class _UserProfileState extends State<UserProfile> {
                               child: Divider(color: kTextColor),
                             ),
                             const SizedBox(height: 16),
-                            buildInfoCard(icon: Icons.email, text: userData!['email'] ?? ''),
+                            buildInfoCard(
+                                icon: Icons.email,
+                                text: userData!['email'] ?? ''),
                             const SizedBox(height: 16),
-                            buildInfoCard(icon: Icons.phone, text: userData!['phone'] ?? ''),
+                            buildInfoCard(
+                                icon: Icons.phone,
+                                text: userData!['phone'] ?? ''),
                             const SizedBox(height: 16),
-                            buildInfoCard(icon: Icons.house, text: userData!['address'] ?? ''),
+                            buildInfoCard(
+                                icon: Icons.house,
+                                text: userData!['address'] ?? ''),
                             const SizedBox(height: 16),
                             CustomButton(
                               label: "EDIT PROFILE",
                               onPressed: () {
-                                Navigator.pushNamed(context, EditUserProfile.id);
+                                Navigator.pushNamed(
+                                    context, EditUserProfile.id);
                               },
                             ),
                             const SizedBox(height: 20),
-                            CustomButton(
-                              label: "Sign Out",
-                              onPressed: () async {
-                                await _auth.signout(context);
-                                validation.goToLogin(context);
-                              },
-                            ),
-                            const SizedBox(height: 16),
                           ],
                         ),
                       ),
@@ -155,4 +160,3 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 }
-

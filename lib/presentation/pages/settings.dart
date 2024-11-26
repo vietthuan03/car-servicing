@@ -1,5 +1,6 @@
 import 'package:car_servicing/constants.dart';
-import 'package:car_servicing/presentation/widgets/button_widget.dart';
+import 'package:car_servicing/presentation/pages/home.dart';
+import 'package:car_servicing/presentation/pages/user/UserProfile.dart';
 import 'package:car_servicing/services/auth_service.dart';
 import 'package:car_servicing/viewmodels/Auth_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,10 @@ class _SettingsState extends State<Settings> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Home()),
+              );
             },
           ),
           title: const Text('Settings'),
@@ -40,6 +44,23 @@ class _SettingsState extends State<Settings> {
               // mainAxisAlignment: MainAxisAlignment.start,
               // mainAxisSize: MainAxisSize.max,
               children: [
+                const SizedBox(
+                  height: 16,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const UserProfile()),
+                    );
+                  },
+                  child:
+                      buildFieldRow(icon: Icons.person, text: "User Profile"),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
                 buildFieldRow(icon: Icons.privacy_tip, text: "Privacy Poilicy"),
                 const SizedBox(
                   height: 16,
@@ -63,13 +84,18 @@ class _SettingsState extends State<Settings> {
                 const SizedBox(
                   height: 16,
                 ),
-                CustomButton(
-                  label: "Sign Out",
-                  onPressed: () async {
+                GestureDetector(
+                  onTap: ()async {
                     await _auth.signout(context);
                     validation.goToLogin(context);
+                    
                   },
-                )
+                  child:
+                      buildFieldRow(icon: Icons.logout, text: "Sign Out"),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
               ],
             )),
           ),
