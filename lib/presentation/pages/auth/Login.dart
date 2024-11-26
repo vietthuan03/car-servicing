@@ -67,7 +67,7 @@ class _LoginState extends State<Login> {
                   label: "Password",
                   hint: "Enter Your Password",
                   controller: _password,
-                  // isPass: true,
+                  isPass: true,
                   errorText: validation.password.error,
                   onChanged: (value) {
                     validation.validatePassword(value);

@@ -2,9 +2,11 @@ import 'package:car_servicing/presentation/pages/infor_car/vehicle.dart';
 import 'package:car_servicing/presentation/pages/payment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../models/appoinment_model.dart';
 import '../../repository/appointment_repo.dart';
 import '../widgets/date_time_custom.dart';
+import '../../provider/service_cart_provider.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -38,13 +40,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   Future<void> _proceedToPayment() async {
     if (selectedDateTime != null) {
+      final cartProvider = Provider.of<ServiceCartProvider>(context, listen: false);
+      final firstServiceId = cartProvider.cartItems.keys.first.id; // Get the first service ID
+
       final appointment = AppointmentModel(
         appointmentDate: selectedDateTime,
         userId: userId,
+        serviceId: firstServiceId, // Use the first service ID
         // carId: 'your_car_id', // Replace with actual car ID
-        // serviceId: 'your_service_id', // Replace with actual service ID
       );
-      await _appointmentRepository.bookAppointment(appointment, userId);
+      await _appointmentRepository.bookAppointment(appointment, userId,firstServiceId);
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => const PaymentPage(),
@@ -55,6 +60,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<ServiceCartProvider>(context);
+    final totalPrice = cartProvider.cartItems.entries
+        .map((entry) => entry.key.price * entry.value)
+        .reduce((value, element) => value + element);
+    final serviceTitles = cartProvider.cartItems.keys
+        .map((service) => service.title)
+        .join(', ');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout'),
@@ -98,9 +111,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ],
               ),
             ),
-            const Text(
-              'Basic Service 2.599.000 VND',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            Text(
+              'Services: $serviceTitles',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Total: ${(totalPrice).toStringAsFixed(2)} VND',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             ElevatedButton(

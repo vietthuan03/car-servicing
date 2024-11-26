@@ -1,5 +1,4 @@
 import 'package:car_servicing/constants.dart';
-import 'package:car_servicing/presentation/pages/Home.dart';
 import 'package:car_servicing/presentation/pages/auth/Login.dart';
 import 'package:car_servicing/presentation/widgets/dropdown.dart';
 import 'package:car_servicing/viewmodels/Auth_viewmodel.dart';
@@ -110,7 +109,7 @@ class _RegistationState extends State<Registation> {
                 ),
                 const SizedBox(height: 24),
                 CustomDropdownField(
-                  label: "Address",
+                  label: "City",
                   hint: "Select Your City",
                   value: validation.address.value,
                   items: validation.cities.map((String city) {

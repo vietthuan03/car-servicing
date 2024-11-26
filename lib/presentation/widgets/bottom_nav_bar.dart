@@ -1,3 +1,4 @@
+import 'package:car_servicing/presentation/pages/infor_car/car_profile_screen.dart';
 import 'package:car_servicing/presentation/pages/infor_car/vehicle.dart';
 import 'package:car_servicing/presentation/pages/record/records_screen.dart';
 import 'package:car_servicing/presentation/pages/settings.dart';
@@ -42,6 +43,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
         // Điều hướng đến trang RecordsScreen
         Navigator.push(
           context,
+          MaterialPageRoute(builder: (context) => const CarProfileScreen()),
+        );
+        break;
+      case 4:
+        // Điều hướng đến trang RecordsScreen
+        Navigator.push(
+          context,
           MaterialPageRoute(builder: (context) => const Settings()),
         );
         break;
@@ -69,6 +77,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.file_copy,
+            size: 30,
+          ),
+          label: 'Records',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.car_repair,
             size: 30,
           ),
           label: 'Records',
