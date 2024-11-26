@@ -43,13 +43,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
         // Điều hướng đến trang RecordsScreen
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const CarProfileScreen()),
-        );
-        break;
-      case 4:
-        // Điều hướng đến trang RecordsScreen
-        Navigator.push(
-          context,
           MaterialPageRoute(builder: (context) => const Settings()),
         );
         break;
@@ -77,13 +70,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.file_copy,
-            size: 30,
-          ),
-          label: 'Records',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            Icons.car_repair,
             size: 30,
           ),
           label: 'Records',

@@ -4,6 +4,8 @@ import 'package:car_servicing/presentation/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:car_servicing/services/Auth_service.dart';
 
+import 'infor_car/car_profile_screen.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -59,7 +61,7 @@ class _HomePage extends State<Home> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        const AddCarScreen(), // Điều hướng đến ViewCarScreen
+                        const CarProfileScreen(), // Điều hướng đến CarProfileScreen
                   ),
                 );
               },

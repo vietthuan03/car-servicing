@@ -46,7 +46,7 @@ class _CarProfileScreenState extends State<CarProfileScreen> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +75,7 @@ class _CarProfileScreenState extends State<CarProfileScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 3),
+      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 0),
     );
   }
 }
@@ -111,7 +111,8 @@ Widget _buildCarRecord(BuildContext context, Map<String, dynamic> car) {
                     children: [
                       Text(
                         car['carBrand'],
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         car['carPlate'],
