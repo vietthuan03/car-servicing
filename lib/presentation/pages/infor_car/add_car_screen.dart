@@ -1,5 +1,6 @@
 import 'package:car_servicing/models/service_model.dart';
 import 'package:car_servicing/presentation/pages/Home.dart';
+import 'package:car_servicing/services/Auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,8 @@ class _AddCarScreenState extends State<AddCarScreen> {
   final TextEditingController _carModelController = TextEditingController();
   final TextEditingController _carYearController = TextEditingController();
   final TextEditingController _vinController = TextEditingController();
+
+  final _auth = AuthService();
 
   bool _isFormValid = false; // Theo dõi trạng thái hợp lệ của form
 
@@ -79,6 +82,7 @@ class _AddCarScreenState extends State<AddCarScreen> {
         // Tạo đối tượng CarModel
         final car = CarModel(
           id: '',
+          userId: _auth.getCurrentUserId().toString(),
           carPlate: _carPlateController.text.trim(),
           carBrand: _carBrandController.text.trim(),
           carModel: _carModelController.text.trim(),

@@ -1,3 +1,4 @@
+import 'package:car_servicing/presentation/pages/infor_car/car_profile_screen.dart';
 import 'package:car_servicing/presentation/pages/infor_car/vehicle.dart';
 import 'package:car_servicing/presentation/pages/record/records_screen.dart';
 import 'package:car_servicing/presentation/pages/settings.dart';

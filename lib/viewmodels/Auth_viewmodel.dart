@@ -69,7 +69,7 @@ class UserAuthenticationViewmodel {
       password = ValidationModel(value: value, error: null);
     } else {
       password = ValidationModel(
-          value: value, error: "Password is greater than 5 characters");
+          value: value, error: "Password must be 6-16 characters.");
     }
   }
 

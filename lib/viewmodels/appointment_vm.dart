@@ -13,7 +13,7 @@ class AppointmentViewModel extends ChangeNotifier {
     appointment.userId = userId;
     appointment.carId = carId;
     appointment.serviceId = serviceId;
-    await _repository.bookAppointment(appointment, userId);
+    await _repository.bookAppointment(appointment, userId,serviceId,carId);
     notifyListeners();
   }
 

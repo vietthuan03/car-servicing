@@ -6,7 +6,7 @@ class AppointmentRepository {
       FirebaseFirestore.instance.collection('appointments');
 
   // Thêm lịch hẹn mới
-  Future<void> bookAppointment(AppointmentModel appointment, String userId) async {
+  Future<void> bookAppointment(AppointmentModel appointment, String userId, String serviceId, String carId) async {
     await _appointments.doc(appointment.id).set(appointment.toFirestore());
   }
 

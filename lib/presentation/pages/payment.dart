@@ -1,6 +1,9 @@
 import 'package:car_servicing/presentation/pages/track_order/confir.dart';
 import 'package:car_servicing/presentation/pages/checkout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/service_cart_provider.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -14,6 +17,15 @@ class _PaymentScreenState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
+        final cartProvider = Provider.of<ServiceCartProvider>(context);
+    final totalPrice = cartProvider.cartItems.entries
+        .map((entry) => entry.key.price * entry.value)
+        .reduce((value, element) => value + element);
+    final serviceTitles = cartProvider.cartItems.keys
+        .map((service) => service.title)
+        .join(', ');
+
+        
     return Scaffold(
       appBar: AppBar(
         title: const Text('Payment', style: TextStyle(color: Colors.black)),
@@ -114,9 +126,9 @@ class _PaymentScreenState extends State<PaymentPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Basic Service\n2.599.000 VND',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              '$serviceTitles\n${(totalPrice).toStringAsFixed(2)} VND',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             ElevatedButton(
               onPressed: () {

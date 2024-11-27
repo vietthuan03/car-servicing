@@ -16,12 +16,18 @@ class ServiceRepository {
     });
   }
 
-  // Lấy một dịch vụ dựa trên id
-  Stream<ServiceModel> getServiceById() {
-    return servicesCollection.doc().snapshots().map((snapshot) {
+// Lấy một dịch vụ dựa trên id
+  Stream<ServiceModel?> getServiceById(String? serviceId) {
+    if (serviceId == null || serviceId.isEmpty) {
+      throw Exception('Invalid service ID');
+    }
+
+    return servicesCollection.doc(serviceId).snapshots().map((snapshot) {
       if (snapshot.exists) {
         return ServiceModel.fromFirestore(
-            snapshot.data() as Map<String, dynamic>, snapshot.id);
+          snapshot.data() as Map<String, dynamic>,
+          snapshot.id,
+        );
       } else {
         throw Exception('Service not found');
       }

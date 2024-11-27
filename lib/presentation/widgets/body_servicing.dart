@@ -13,7 +13,8 @@ class ServiceCard2 extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // Căn chỉnh tất cả sang trái
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // Căn chỉnh tất cả sang trái
             children: [
               // Phần chứa nội dung chính
               Row(
@@ -56,7 +57,8 @@ class ServiceCard2 extends StatelessWidget {
                             Icon(Icons.star, color: Colors.amber, size: 20),
                             Icon(Icons.star, color: Colors.amber, size: 20),
                             Icon(Icons.star, color: Colors.amber, size: 20),
-                            Icon(Icons.star_border, color: Colors.amber, size: 20),
+                            Icon(Icons.star_border,
+                                color: Colors.amber, size: 20),
                           ],
                         ),
                         SizedBox(height: 8),
@@ -85,7 +87,7 @@ class ServiceCard2 extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/carlogo.jpg', // Đường dẫn đến hình ảnh
+                          'assets/images/car.png', // Đường dẫn đến hình ảnh
                           height: 100, // Chiều cao của hình ảnh
                           width: 100, // Chiều rộng của hình ảnh
                         ),

@@ -1,4 +1,3 @@
-import 'package:car_servicing/repository/service_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/service_model.dart';
@@ -16,7 +15,6 @@ class VehicleScreen extends StatefulWidget {
 }
 
 class _VehicleScreenState extends State<VehicleScreen> {
-  final ServiceRepository _serviceRepository = ServiceRepository();
   late ServiceModel service;
 
   @override
@@ -46,7 +44,7 @@ class _VehicleScreenState extends State<VehicleScreen> {
           children: [
             Expanded(
               child: cartProvider.cartItems.isEmpty
-                  ? Center(
+                  ? const Center(
                       child: Text(
                         'Your cart is empty. Add services to your cart!',
                         style: TextStyle(

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:car_servicing/models/service_model.dart';
-import 'package:provider/provider.dart';
-
 import '../../provider/service_cart_provider.dart';
 import '../pages/services/basic_service.dart';
 

@@ -1,26 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../widgets/body_servicing.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false, //  "DEBUG" hidden
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
+class TrackOrder extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<TrackOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
