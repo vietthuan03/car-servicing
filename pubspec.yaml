@@ -37,6 +37,4 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/image.jpg
-    - assets/user.jpg
-    - assets/carlogo.jpg
+    - assets/images
