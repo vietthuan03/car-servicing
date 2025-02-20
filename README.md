@@ -30,6 +30,16 @@ Car Servicing is a mobile application that helps you track vehicle maintenance s
    ``` bash
    flutter run
    ```
+## Application interface
+| Login | Sign In | Home | Service |
+|-------|--------|------|---------|
+| ![Login](assets/images/demo/login.png) | ![Sign In](assets/images/demo/sign_in.png) | ![Home](assets/images/demo/home.png) | ![Service](assets/images/demo/service.png) |
+
+| Detail Service | History | Checkout | Payment |
+|---------------|---------|----------|---------|
+| ![Detail Service](assets/images/demo/detail_service.png) | ![History](assets/images/demo/history.png) | ![Checkout](assets/images/demo/checkout.png) | ![Payment](assets/images/demo/payment.png) |
+
+
 
 ## Contributing
 
